@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>花艺智析</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;background:#f0ebe0;font-family:'Noto Serif SC',Georgia,serif;
+    background-image:radial-gradient(ellipse at 10% 10%,#e2eedd 0%,transparent 55%),
+    radial-gradient(ellipse at 90% 90%,#ede5d8 0%,transparent 55%)}
+  .wrap{max-width:700px;margin:0 auto;padding:36px 16px 80px}
+  .header{text-align:center;margin-bottom:36px}
+  .header .icon{font-size:48px;margin-bottom:8px}
+  .header h1{font-size:30px;font-weight:900;color:#253023;letter-spacing:0.12em;margin-bottom:6px}
+  .header p{font-size:13px;color:#8a9e84;letter-spacing:0.08em}
+  .card{background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);border-radius:22px;
+    padding:24px;margin-bottom:24px;box-shadow:0 4px 30px rgba(90,130,80,0.1);
+    border:1px solid rgba(140,170,120,0.2)}
+  .zone{border:2px dashed #b4caac;border-radius:14px;min-height:180px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    transition:all 0.3s;background:rgba(238,246,234,0.45);overflow:hidden}
+  .zone:hover{border-color:#6a9e60;background:rgba(130,180,120,0.09)}
+  .zone img{width:100%;max-height:300px;object-fit:contain;border-radius:10px}
+  .ph{text-align:center;padding:32px}
+  .ph .emoji{font-size:52px;margin-bottom:12px;display:block}
+  .ph p{font-size:15px;color:#344832;font-weight:700;margin-bottom:4px}
+  .ph span{font-size:12px;color:#96a890}
+  .btn{display:block;width:100%;margin-top:16px;padding:14px;
+    background:linear-gradient(135deg,#5e9458,#3d7040);color:#fff;border:none;
+    border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;
+    letter-spacing:0.1em;font-family:inherit;
+    box-shadow:0 4px 18px rgba(70,120,60,0.3);transition:all 0.2s}
+  .btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.08)}
+  .btn:disabled{opacity:0.7;cursor:not-allowed}
+  .err{color:#b03030;text-align:center;margin-top:10px;font-size:13px}
+  /* Result */
+  .rcard{background:rgba(255,255,255,0.82);backdrop-filter:blur(14px);border-radius:22px;
+    padding:28px 22px;box-shadow:0 8px 48px rgba(70,110,60,0.13);
+    border:1px solid rgba(140,170,120,0.22);animation:fadeUp 0.6s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .rtop{text-align:center;border-bottom:1.5px solid #cce0c4;padding-bottom:22px;margin-bottom:22px}
+  .rtag{font-size:11px;color:#7a9e72;letter-spacing:0.15em;font-weight:700;margin-bottom:6px}
+  .rtitle{font-size:24px;font-weight:900;color:#253023;margin-bottom:10px;letter-spacing:0.08em}
+  .rintro{font-size:13px;color:#5a6a58;line-height:1.9}
+  .section{margin-bottom:22px}
+  .stitle{font-size:13px;font-weight:800;color:#253023;margin-bottom:12px;
+    padding-bottom:7px;border-bottom:2px solid #bcd8b0;letter-spacing:0.06em}
+  .fitem{display:flex;gap:10px;align-items:flex-start;
+    background:linear-gradient(135deg,rgba(228,242,222,0.7),rgba(242,236,224,0.5));
+    border-radius:12px;padding:10px 12px;border:1px solid rgba(170,205,160,0.35);
+    margin-bottom:8px;transition:transform 0.18s}
+  .fitem:hover{transform:translateX(4px)}
+  .frole{font-size:10px;color:#6a9664;font-weight:800;letter-spacing:0.1em;margin-bottom:2px}
+  .fname{font-size:13px;font-weight:700;color:#253023;margin-bottom:2px}
+  .fdesc{font-size:11.5px;color:#6a786a;line-height:1.65}
+  .aitem{display:flex;gap:10px;align-items:flex-start;
+    background:linear-gradient(135deg,rgba(242,235,224,0.7),rgba(228,240,222,0.5));
+    border-radius:12px;padding:10px 12px;border:1px solid rgba(195,180,158,0.32);
+    margin-bottom:8px;transition:transform 0.18s}
+  .aitem:hover{transform:translateX(4px)}
+  .aicon{font-size:20px;flex-shrink:0;margin-top:1px}
+  .atitle{font-size:12.5px;font-weight:700;color:#253023;margin-bottom:2px}
+  .adesc{font-size:11.5px;color:#686860;line-height:1.65}
+  .colors{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .swatch{width:24px;height:24px;border-radius:6px;border:1.5px solid rgba(0,0,0,0.09);
+    box-shadow:0 2px 5px rgba(0,0,0,0.09);display:inline-block}
+  .center-img{text-align:center;margin:18px 0}
+  .center-img img{width:160px;height:160px;object-fit:cover;border-radius:50%;
+    border:4px solid #b8d4b0;box-shadow:0 6px 28px rgba(70,110,60,0.22)}
+  input[type=file]{display:none}
+  .spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);
+    border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;
+    display:inline-block;vertical-align:middle;margin-right:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="icon">🌸</div>
+    <h1>花艺智析</h1>
+    <p>上传花艺作品 · AI 生成专业解析报告</p>
+  </div>
+
+  <div class="card">
+    <div class="zone" id="zone" onclick="document.getElementById('fileInput').click()">
+      <div class="ph" id="placeholder">
+        <span class="emoji">🌿</span>
+        <p>点击或拖拽上传花艺图片</p>
+        <span>支持 JPG · PNG · WEBP</span>
+      </div>
+    </div>
+    <input type="file" id="fileInput" accept="image/*"/>
+    <button class="btn" id="analyzeBtn" style="display:none" onclick="analyze()">✨ 开始智能分析</button>
+    <p class="err" id="errMsg"></p>
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<script>
+const SYSTEM_PROMPT = `你是专业花艺设计师和花卉识别专家。分析花艺作品，严格只返回JSON不含任何markdown标记：
+{"title":"风格标题5-10字","subtitle":"副标题","introduction":"整体介绍50字","flowers":[{"name":"花材名","role":"角色","description":"描述20字","emoji":"emoji"}],"style":{"title":"风格名","description":"描述30字"},"colorScheme":{"title":"色彩方案","description":"描述30字","colors":["#hex1","#hex2","#hex3","#hex4","#hex5"]},"vase":{"title":"容器搭配","description":"描述30字"},"composition":{"title":"构成技法","description":"描述30字"}}
+识别3-7种花材，颜色从图片真实提取。`;
+
+let imageBase64 = null;
+let imageMime = "image/jpeg";
+let imageUrl = null;
+
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  loadFile(file);
+});
+
+const zone = document.getElementById('zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor='#6a9e60'; });
+zone.addEventListener('dragleave', () => { zone.style.borderColor='#b4caac'; });
+zone.addEventListener('drop', e => {
+  e.preventDefault(); zone.style.borderColor='#b4caac';
+  loadFile(e.dataTransfer.files[0]);
+});
+
+function loadFile(file) {
+  if (!file.type.startsWith('image/')) return;
+  imageMime = file.type;
+  imageUrl = URL.createObjectURL(file);
+  zone.innerHTML = `<img src="${imageUrl}" alt="预览"/>`;
+  document.getElementById('analyzeBtn').style.display = 'block';
+  document.getElementById('result').innerHTML = '';
+  document.getElementById('errMsg').textContent = '';
+  const reader = new FileReader();
+  reader.onload = e => { imageBase64 = e.target.result.split(',')[1]; };
+  reader.readAsDataURL(file);
+}
+
+async function analyze() {
+  if (!imageBase64) return;
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>AI 正在识别花材中...';
+  document.getElementById('errMsg').textContent = '';
+
+  try {
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${window.OPENROUTER_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.0-flash-001',
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'text', text: SYSTEM_PROMPT + '\n请分析这束花艺作品。' },
+            { type: 'image_url', image_url: { url: `data:${imageMime};base64,${imageBase64}` } }
+          ]
+        }]
+      })
+    });
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content || '';
+    const clean = text.replace(/```json|```/g,'').trim();
+    const r = JSON.parse(clean);
+    renderResult(r);
+  } catch(e) {
+    document.getElementById('errMsg').textContent = '分析失败，请重试：' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '✨ 重新分析';
+  }
+}
+
+function renderResult(r) {
+  const colors = (r.colorScheme?.colors||[]).map(c=>
+    `<span class="swatch" style="background:${c}" title="${c}"></span>`).join('');
+
+  const flowers = (r.flowers||[]).map(f=>`
+    <div class="fitem">
+      <span style="font-size:26px;line-height:1;flex-shrink:0">${f.emoji}</span>
+      <div>
+        <div class="frole">${f.role}</div>
+        <div class="fname">${f.name}</div>
+        <div class="fdesc">${f.description}</div>
+      </div>
+    </div>`).join('');
+
+  const aesthetics = [
+    ['🌿', r.style],
+    ['🎨', r.colorScheme],
+    ['🏺', r.vase],
+    ['✦', r.composition]
+  ].map(([icon,d])=>`
+    <div class="aitem">
+      <span class="aicon">${icon}</span>
+      <div>
+        <div class="atitle">${d?.title||''}</div>
+        <div class="adesc">${d?.description||''}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('result').innerHTML = `
+    <div class="rcard">
+      <div class="rtop">
+        <div class="rtag">${r.subtitle||''}</div>
+        <div class="rtitle">${r.title||''}</div>
+        <div class="rintro">${r.introduction||''}</div>
+      </div>
+      <div class="center-img"><img src="${imageUrl}" alt="花艺"/></div>
+      <div class="section">
+        <div class="stitle">🌺 花材成分识别</div>
+        ${flowers}
+      </div>
+      <div class="section">
+        <div class="stitle">🎨 设计美学解析</div>
+        ${aesthetics}
+        <div class="colors">${colors}</div>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}cp /home/claude/floral-analyzer/index.html /mnt/user-data/outputs/index.html && cp /home/claude/floral-analyzer/vercel.json /mnt/user-data/outputs/vercel.json
