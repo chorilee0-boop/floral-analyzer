@@ -2,75 +2,89 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
 <title>花艺智析</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap');
-  *{box-sizing:border-box;margin:0;padding:0}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   body{min-height:100vh;background:#f0ebe0;font-family:'Noto Serif SC',Georgia,serif;
     background-image:radial-gradient(ellipse at 10% 10%,#e2eedd 0%,transparent 55%),
     radial-gradient(ellipse at 90% 90%,#ede5d8 0%,transparent 55%)}
   .wrap{max-width:700px;margin:0 auto;padding:36px 16px 80px}
-  .header{text-align:center;margin-bottom:36px}
+  .header{text-align:center;margin-bottom:28px}
   .header .icon{font-size:48px;margin-bottom:8px}
   .header h1{font-size:30px;font-weight:900;color:#253023;letter-spacing:0.12em;margin-bottom:6px}
   .header p{font-size:13px;color:#8a9e84;letter-spacing:0.08em}
-  .card{background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);border-radius:22px;
-    padding:24px;margin-bottom:24px;box-shadow:0 4px 30px rgba(90,130,80,0.1);
+  .card{background:rgba(255,255,255,0.82);border-radius:20px;padding:20px;
+    margin-bottom:20px;box-shadow:0 4px 24px rgba(90,130,80,0.1);
     border:1px solid rgba(140,170,120,0.2)}
-  .zone{border:2px dashed #b4caac;border-radius:14px;min-height:180px;
-    display:flex;align-items:center;justify-content:center;cursor:pointer;
-    transition:all 0.3s;background:rgba(238,246,234,0.45);overflow:hidden}
-  .zone:hover{border-color:#6a9e60;background:rgba(130,180,120,0.09)}
-  .zone img{width:100%;max-height:300px;object-fit:contain;border-radius:10px}
-  .ph{text-align:center;padding:32px}
-  .ph .emoji{font-size:52px;margin-bottom:12px;display:block}
-  .ph p{font-size:15px;color:#344832;font-weight:700;margin-bottom:4px}
-  .ph span{font-size:12px;color:#96a890}
-  .btn{display:block;width:100%;margin-top:16px;padding:14px;
+  .key-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .key-label{font-size:14px;font-weight:800;color:#253023;letter-spacing:0.04em}
+  .key-saved{font-size:12px;color:#5a9654;font-weight:700;display:none;margin-left:auto}
+  .key-input{width:100%;padding:12px 14px;border:2px solid #c4dab8;border-radius:12px;
+    font-size:14px;font-family:inherit;background:#f4fbf0;color:#253023;
+    outline:none;margin-bottom:10px;-webkit-appearance:none}
+  .key-input:focus{border-color:#6a9e60}
+  .save-btn{width:100%;padding:13px;background:linear-gradient(135deg,#6aaa64,#3d8040);
+    color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;
+    cursor:pointer;font-family:inherit;letter-spacing:0.08em;
+    box-shadow:0 3px 14px rgba(70,120,60,0.28);-webkit-appearance:none;
+    touch-action:manipulation}
+  .key-hint{font-size:11px;color:#9aaa90;margin-top:8px;text-align:center}
+  .preview-box{background:#f4f9f0;border:2px dashed #b4caac;border-radius:14px;
+    min-height:160px;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;margin-bottom:14px}
+  .preview-box img{width:100%;max-height:280px;object-fit:contain;border-radius:10px}
+  .ph{text-align:center;padding:28px 20px}
+  .ph-emoji{font-size:48px;display:block;margin-bottom:10px}
+  .ph-text{font-size:14px;color:#344832;font-weight:700;margin-bottom:4px}
+  .ph-hint{font-size:12px;color:#96a890}
+  .upload-label{display:block;width:100%;padding:14px;
+    background:linear-gradient(135deg,#7aba74,#4a8a4a);color:#fff;
+    border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;
+    letter-spacing:0.08em;font-family:inherit;text-align:center;
+    box-shadow:0 4px 18px rgba(70,120,60,0.28);margin-bottom:10px;
+    touch-action:manipulation;-webkit-appearance:none}
+  .analyze-btn{display:none;width:100%;padding:14px;
     background:linear-gradient(135deg,#5e9458,#3d7040);color:#fff;border:none;
     border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;
-    letter-spacing:0.1em;font-family:inherit;
-    box-shadow:0 4px 18px rgba(70,120,60,0.3);transition:all 0.2s}
-  .btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.08)}
-  .btn:disabled{opacity:0.7;cursor:not-allowed}
-  .err{color:#b03030;text-align:center;margin-top:10px;font-size:13px}
-  /* Result */
-  .rcard{background:rgba(255,255,255,0.82);backdrop-filter:blur(14px);border-radius:22px;
-    padding:28px 22px;box-shadow:0 8px 48px rgba(70,110,60,0.13);
-    border:1px solid rgba(140,170,120,0.22);animation:fadeUp 0.6s ease both}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    letter-spacing:0.08em;font-family:inherit;
+    box-shadow:0 4px 18px rgba(70,120,60,0.28);
+    touch-action:manipulation;-webkit-appearance:none}
+  .analyze-btn:disabled{opacity:0.7}
+  .err{color:#b03030;text-align:center;margin-top:10px;font-size:13px;line-height:1.5}
+  .rcard{background:rgba(255,255,255,0.9);border-radius:20px;padding:24px 18px;
+    box-shadow:0 8px 40px rgba(70,110,60,0.13);border:1px solid rgba(140,170,120,0.22);
+    animation:fadeUp 0.6s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .rtop{text-align:center;border-bottom:1.5px solid #cce0c4;padding-bottom:22px;margin-bottom:22px}
+  .rtop{text-align:center;border-bottom:1.5px solid #cce0c4;padding-bottom:18px;margin-bottom:18px}
   .rtag{font-size:11px;color:#7a9e72;letter-spacing:0.15em;font-weight:700;margin-bottom:6px}
-  .rtitle{font-size:24px;font-weight:900;color:#253023;margin-bottom:10px;letter-spacing:0.08em}
+  .rtitle{font-size:22px;font-weight:900;color:#253023;margin-bottom:8px;letter-spacing:0.08em}
   .rintro{font-size:13px;color:#5a6a58;line-height:1.9}
-  .section{margin-bottom:22px}
-  .stitle{font-size:13px;font-weight:800;color:#253023;margin-bottom:12px;
+  .section{margin-bottom:18px}
+  .stitle{font-size:13px;font-weight:800;color:#253023;margin-bottom:10px;
     padding-bottom:7px;border-bottom:2px solid #bcd8b0;letter-spacing:0.06em}
   .fitem{display:flex;gap:10px;align-items:flex-start;
-    background:linear-gradient(135deg,rgba(228,242,222,0.7),rgba(242,236,224,0.5));
-    border-radius:12px;padding:10px 12px;border:1px solid rgba(170,205,160,0.35);
-    margin-bottom:8px;transition:transform 0.18s}
-  .fitem:hover{transform:translateX(4px)}
+    background:linear-gradient(135deg,rgba(228,242,222,0.8),rgba(242,236,224,0.6));
+    border-radius:12px;padding:10px 12px;border:1px solid rgba(170,205,160,0.4);
+    margin-bottom:8px}
   .frole{font-size:10px;color:#6a9664;font-weight:800;letter-spacing:0.1em;margin-bottom:2px}
   .fname{font-size:13px;font-weight:700;color:#253023;margin-bottom:2px}
-  .fdesc{font-size:11.5px;color:#6a786a;line-height:1.65}
+  .fdesc{font-size:11.5px;color:#6a786a;line-height:1.6}
   .aitem{display:flex;gap:10px;align-items:flex-start;
-    background:linear-gradient(135deg,rgba(242,235,224,0.7),rgba(228,240,222,0.5));
-    border-radius:12px;padding:10px 12px;border:1px solid rgba(195,180,158,0.32);
-    margin-bottom:8px;transition:transform 0.18s}
-  .aitem:hover{transform:translateX(4px)}
+    background:linear-gradient(135deg,rgba(242,235,224,0.8),rgba(228,240,222,0.6));
+    border-radius:12px;padding:10px 12px;border:1px solid rgba(195,180,158,0.35);
+    margin-bottom:8px}
   .aicon{font-size:20px;flex-shrink:0;margin-top:1px}
   .atitle{font-size:12.5px;font-weight:700;color:#253023;margin-bottom:2px}
-  .adesc{font-size:11.5px;color:#686860;line-height:1.65}
-  .colors{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-  .swatch{width:24px;height:24px;border-radius:6px;border:1.5px solid rgba(0,0,0,0.09);
+  .adesc{font-size:11.5px;color:#686860;line-height:1.6}
+  .colors{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .swatch{width:26px;height:26px;border-radius:7px;border:1.5px solid rgba(0,0,0,0.09);
     box-shadow:0 2px 5px rgba(0,0,0,0.09);display:inline-block}
-  .center-img{text-align:center;margin:18px 0}
-  .center-img img{width:160px;height:160px;object-fit:cover;border-radius:50%;
-    border:4px solid #b8d4b0;box-shadow:0 6px 28px rgba(70,110,60,0.22)}
-  input[type=file]{display:none}
+  .center-img{text-align:center;margin:14px 0}
+  .center-img img{width:140px;height:140px;object-fit:cover;border-radius:50%;
+    border:4px solid #b8d4b0;box-shadow:0 6px 24px rgba(70,110,60,0.2)}
   .spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);
     border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;
     display:inline-block;vertical-align:middle;margin-right:8px}
@@ -84,34 +98,30 @@
     <p>上传花艺作品 · AI 生成专业解析报告</p>
   </div>
 
-  <!-- API Key 设置 -->
+  <!-- API Key -->
   <div class="card" id="keyCard">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <div class="key-row">
       <span style="font-size:18px">🔑</span>
-      <span style="font-size:13px;font-weight:800;color:#253023;letter-spacing:0.06em">OpenRouter API Key</span>
-      <span id="keyStatus" style="margin-left:auto;font-size:12px;color:#6a9664;display:none">✅ 已保存</span>
+      <span class="key-label">OpenRouter API Key</span>
+      <span class="key-saved" id="keyStatus">✅ 已保存</span>
     </div>
-    <div style="display:flex;gap:8px">
-      <input type="password" id="keyInput" placeholder="粘贴你的 sk-or-v1-... API Key"
-        style="flex:1;padding:10px 14px;border:1.5px solid #c4dab8;border-radius:10px;
-        font-size:13px;font-family:inherit;background:rgba(240,248,236,0.6);outline:none;color:#253023"/>
-      <button onclick="saveKey()" style="padding:10px 16px;background:#5e9458;color:#fff;
-        border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;
-        font-family:inherit;white-space:nowrap">保存</button>
-    </div>
-    <p style="font-size:11px;color:#9aaa90;margin-top:8px">Key 仅保存在你的手机本地，不会上传到任何服务器</p>
+    <input type="password" class="key-input" id="keyInput" placeholder="粘贴你的 sk-or-v1-... Key"/>
+    <button class="save-btn" id="saveBtn" onclick="saveKey()">保存 Key</button>
+    <p class="key-hint">Key 仅存在你的手机本地，不会上传任何服务器</p>
   </div>
 
+  <!-- 上传 -->
   <div class="card">
-    <div class="zone" id="zone" onclick="document.getElementById('fileInput').click()">
-      <div class="ph" id="placeholder">
-        <span class="emoji">🌿</span>
-        <p>点击或拖拽上传花艺图片</p>
-        <span>支持 JPG · PNG · WEBP</span>
+    <div class="preview-box" id="previewBox">
+      <div class="ph">
+        <span class="ph-emoji">🌿</span>
+        <p class="ph-text">图片将显示在这里</p>
+        <p class="ph-hint">点击下方按钮选择图片</p>
       </div>
     </div>
-    <input type="file" id="fileInput" accept="image/*"/>
-    <button class="btn" id="analyzeBtn" style="display:none" onclick="analyze()">✨ 开始智能分析</button>
+    <label class="upload-label" for="fileInput">📷 选择花艺图片</label>
+    <input type="file" id="fileInput" accept="image/*" style="display:none"/>
+    <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">✨ 开始智能分析</button>
     <p class="err" id="errMsg"></p>
   </div>
 
@@ -127,23 +137,42 @@ let imageBase64 = null;
 let imageMime = "image/jpeg";
 let imageUrl = null;
 
+// 页面加载时读取已保存的 Key
 window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('openrouter_key');
-  if (saved) {
-    document.getElementById('keyInput').value = saved;
-    document.getElementById('keyStatus').style.display = 'inline';
-  }
+  try {
+    const saved = localStorage.getItem('openrouter_key');
+    if (saved) {
+      document.getElementById('keyInput').value = saved;
+      document.getElementById('keyStatus').style.display = 'inline';
+      document.getElementById('saveBtn').textContent = '更新 Key';
+    }
+  } catch(e) {}
 });
 
 function saveKey() {
   const val = document.getElementById('keyInput').value.trim();
-  if (!val) return;
-  localStorage.setItem('openrouter_key', val);
-  document.getElementById('keyStatus').style.display = 'inline';
+  if (!val) {
+    alert('请先粘贴你的 API Key！');
+    return;
+  }
+  try {
+    localStorage.setItem('openrouter_key', val);
+    document.getElementById('keyStatus').style.display = 'inline';
+    document.getElementById('saveBtn').textContent = '✅ 已保存！';
+    setTimeout(() => {
+      document.getElementById('saveBtn').textContent = '更新 Key';
+    }, 2000);
+  } catch(e) {
+    alert('保存失败：' + e.message);
+  }
 }
 
 function getKey() {
-  return localStorage.getItem('openrouter_key') || document.getElementById('keyInput').value.trim();
+  try {
+    return localStorage.getItem('openrouter_key') || document.getElementById('keyInput').value.trim();
+  } catch(e) {
+    return document.getElementById('keyInput').value.trim();
+  }
 }
 
 document.getElementById('fileInput').addEventListener('change', function(e) {
@@ -152,19 +181,14 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
   loadFile(file);
 });
 
-const zone = document.getElementById('zone');
-zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor='#6a9e60'; });
-zone.addEventListener('dragleave', () => { zone.style.borderColor='#b4caac'; });
-zone.addEventListener('drop', e => {
-  e.preventDefault(); zone.style.borderColor='#b4caac';
-  loadFile(e.dataTransfer.files[0]);
-});
-
 function loadFile(file) {
-  if (!file.type.startsWith('image/')) return;
+  if (!file.type.startsWith('image/')) {
+    alert('请选择图片文件！');
+    return;
+  }
   imageMime = file.type;
   imageUrl = URL.createObjectURL(file);
-  zone.innerHTML = `<img src="${imageUrl}" alt="预览"/>`;
+  document.getElementById('previewBox').innerHTML = `<img src="${imageUrl}" alt="预览"/>`;
   document.getElementById('analyzeBtn').style.display = 'block';
   document.getElementById('result').innerHTML = '';
   document.getElementById('errMsg').textContent = '';
@@ -174,10 +198,18 @@ function loadFile(file) {
 }
 
 async function analyze() {
-  if (!imageBase64) return;
+  const key = getKey();
+  if (!key) {
+    alert('请先保存你的 API Key！');
+    return;
+  }
+  if (!imageBase64) {
+    alert('请先选择一张图片！');
+    return;
+  }
   const btn = document.getElementById('analyzeBtn');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>AI 正在识别花材中...';
+  btn.innerHTML = '<span class="spinner"></span>AI 识别中，请稍候...';
   document.getElementById('errMsg').textContent = '';
 
   try {
@@ -185,7 +217,7 @@ async function analyze() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getKey()}`
+        'Authorization': `Bearer ${key}`
       },
       body: JSON.stringify({
         model: 'google/gemini-2.0-flash-001',
@@ -199,12 +231,13 @@ async function analyze() {
       })
     });
     const data = await res.json();
+    if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
     const text = data.choices?.[0]?.message?.content || '';
     const clean = text.replace(/```json|```/g,'').trim();
     const r = JSON.parse(clean);
     renderResult(r);
   } catch(e) {
-    document.getElementById('errMsg').textContent = '分析失败，请重试：' + e.message;
+    document.getElementById('errMsg').textContent = '分析失败：' + e.message;
   } finally {
     btn.disabled = false;
     btn.innerHTML = '✨ 重新分析';
@@ -212,4 +245,45 @@ async function analyze() {
 }
 
 function renderResult(r) {
-  const colors 
+  const colors = (r.colorScheme?.colors||[]).map(c=>
+    `<span class="swatch" style="background:${c}" title="${c}"></span>`).join('');
+  const flowers = (r.flowers||[]).map(f=>`
+    <div class="fitem">
+      <span style="font-size:26px;line-height:1;flex-shrink:0">${f.emoji}</span>
+      <div>
+        <div class="frole">${f.role}</div>
+        <div class="fname">${f.name}</div>
+        <div class="fdesc">${f.description}</div>
+      </div>
+    </div>`).join('');
+  const aesthetics = [
+    ['🌿',r.style],['🎨',r.colorScheme],['🏺',r.vase],['✦',r.composition]
+  ].map(([icon,d])=>`
+    <div class="aitem">
+      <span class="aicon">${icon}</span>
+      <div>
+        <div class="atitle">${d?.title||''}</div>
+        <div class="adesc">${d?.description||''}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('result').innerHTML = `
+    <div class="rcard">
+      <div class="rtop">
+        <div class="rtag">${r.subtitle||''}</div>
+        <div class="rtitle">${r.title||''}</div>
+        <div class="rintro">${r.introduction||''}</div>
+      </div>
+      <div class="center-img"><img src="${imageUrl}" alt="花艺"/></div>
+      <div class="section">
+        <div class="stitle">🌺 花材成分识别</div>${flowers}
+      </div>
+      <div class="section">
+        <div class="stitle">🎨 设计美学解析</div>${aesthetics}
+        <div class="colors">${colors}</div>
+      </div>
+    </div>`;
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
