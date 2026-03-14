@@ -7,174 +7,184 @@
 <title>花艺智析</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --green:#4a7c4e;--green-light:#7ab87a;--green-pale:#e8f4e8;
-  --cream:#f5f0e6;--dark:#253023;--mid:#6a7a68;
+  --green:#4a7c4e;--green2:#7ab87a;--green3:#c8dfc4;--green4:#e8f4e4;
+  --cream:#f5f0e6;--cream2:#faf6ee;--dark:#253023;--mid:#6a7a68;--light:#9aaa90;
 }
-body{min-height:100vh;background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;
-  background-image:radial-gradient(ellipse at 15% 15%,#e0edd8 0%,transparent 50%),
-  radial-gradient(ellipse at 85% 85%,#ede8d8 0%,transparent 50%)}
+body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-height:100vh}
 
-/* SETTINGS MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;
+/* ── MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;
   display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:440px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:420px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.25)}
 .modal h3{font-size:17px;color:var(--dark);margin-bottom:6px;font-weight:800}
-.modal p{font-size:12px;color:#9aaa90;margin-bottom:16px;line-height:1.6}
-.modal input{width:100%;padding:12px 14px;border:2px solid #c4dab8;border-radius:12px;
-  font-size:14px;font-family:inherit;background:#f4fbf0;color:var(--dark);outline:none;margin-bottom:12px}
+.modal p{font-size:12px;color:#9aaa90;margin-bottom:16px;line-height:1.7}
+.modal input{width:100%;padding:13px 14px;border:2px solid var(--green3);border-radius:12px;
+  font-size:14px;font-family:inherit;background:var(--green4);color:var(--dark);
+  outline:none;margin-bottom:12px}
 .modal input:focus{border-color:var(--green)}
-.modal-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--green-light),var(--green));
+.mbtn{width:100%;padding:13px;background:linear-gradient(135deg,var(--green2),var(--green));
   color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;
-  cursor:pointer;font-family:inherit;touch-action:manipulation}
-.modal-close{float:right;background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;margin-top:-4px}
+  cursor:pointer;font-family:inherit}
+.mclose{float:right;background:none;border:none;font-size:24px;
+  cursor:pointer;color:#bbb;line-height:1}
 
-/* HEADER */
-.header{text-align:center;padding:36px 20px 20px;position:relative}
-.settings-btn{position:absolute;right:20px;top:36px;background:rgba(255,255,255,0.8);
-  border:1px solid #c4dab8;border-radius:50%;width:42px;height:42px;
+/* ── HEADER ── */
+.hdr{text-align:center;padding:32px 20px 16px;position:relative;
+  background:linear-gradient(180deg,rgba(232,244,228,0.6) 0%,transparent 100%)}
+.gear-btn{position:absolute;right:18px;top:32px;width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,0.9);border:1px solid var(--green3);
   font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   box-shadow:0 2px 10px rgba(0,0,0,0.08);touch-action:manipulation}
-.header-icon{font-size:52px;margin-bottom:8px}
-.header h1{font-size:32px;font-weight:900;color:var(--dark);letter-spacing:0.12em;margin-bottom:6px}
-.header p{font-size:13px;color:#8a9e84;letter-spacing:0.06em}
+.hdr h1{font-size:30px;font-weight:900;color:var(--dark);letter-spacing:0.12em;margin:8px 0 5px}
+.hdr p{font-size:13px;color:var(--light);letter-spacing:0.06em}
 
-/* MAIN */
-.wrap{max-width:780px;margin:0 auto;padding:0 16px 80px}
-
-/* UPLOAD SECTION */
-.upload-card{background:rgba(255,255,255,0.85);border-radius:24px;padding:24px;
-  margin-bottom:24px;box-shadow:0 4px 30px rgba(80,120,70,0.1);
-  border:1px solid rgba(140,170,120,0.25)}
-.upload-zone{border:2.5px dashed #b4caac;border-radius:18px;
-  overflow:hidden;position:relative;background:#f4f9f0;
-  min-height:260px;display:flex;align-items:center;justify-content:center;
-  margin-bottom:16px;transition:border-color 0.3s}
-.upload-zone.has-image{min-height:320px;border-style:solid;border-color:#c4dab8}
-.upload-zone img{width:100%;height:100%;object-fit:contain;max-height:400px;display:block}
-.upload-ph{text-align:center;padding:40px 20px}
-.upload-ph .emoji{font-size:56px;display:block;margin-bottom:14px}
-.upload-ph p{font-size:15px;color:var(--dark);font-weight:700;margin-bottom:5px}
-.upload-ph span{font-size:12px;color:#96a890}
-.upload-label{display:block;width:100%;padding:15px;
+/* ── UPLOAD ── */
+.wrap{max-width:820px;margin:0 auto;padding:0 16px 80px}
+.upload-card{background:rgba(255,255,255,0.88);border-radius:22px;padding:20px;
+  margin-bottom:20px;box-shadow:0 4px 28px rgba(80,120,70,0.1);
+  border:1px solid rgba(140,170,120,0.22)}
+.drop-zone{border:2.5px dashed var(--green3);border-radius:16px;min-height:240px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:var(--green4);margin-bottom:14px;transition:all 0.3s;cursor:pointer}
+.drop-zone.filled{border-style:solid;border-color:var(--green3);min-height:300px;background:#fff}
+.drop-zone img{width:100%;max-height:380px;object-fit:contain}
+.ph{text-align:center;padding:36px 20px}
+.ph .big{font-size:54px;display:block;margin-bottom:12px}
+.ph .t{font-size:15px;color:var(--dark);font-weight:700;margin-bottom:4px}
+.ph .s{font-size:12px;color:var(--light)}
+.ulabel{display:block;width:100%;padding:14px;text-align:center;
   background:linear-gradient(135deg,#7aba74,var(--green));color:#fff;
-  border-radius:13px;font-size:16px;font-weight:700;cursor:pointer;
-  text-align:center;box-shadow:0 4px 18px rgba(70,120,60,0.28);
-  margin-bottom:10px;touch-action:manipulation;letter-spacing:0.06em}
-.analyze-btn{display:none;width:100%;padding:15px;
-  background:linear-gradient(135deg,#5e9458,#3a6e3e);color:#fff;border:none;
-  border-radius:13px;font-size:16px;font-weight:700;cursor:pointer;
-  font-family:inherit;box-shadow:0 4px 18px rgba(70,120,60,0.28);
-  touch-action:manipulation;letter-spacing:0.06em;transition:all 0.2s}
-.analyze-btn:disabled{opacity:0.7}
-.err{color:#b03030;text-align:center;margin-top:10px;font-size:13px;line-height:1.5}
-
-/* INFOGRAPHIC */
-.infographic{background:#fff;border-radius:24px;overflow:hidden;
-  box-shadow:0 8px 48px rgba(70,110,60,0.15);margin-bottom:24px;
-  animation:fadeUp 0.7s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;
+  margin-bottom:10px;box-shadow:0 4px 16px rgba(70,120,60,0.25);letter-spacing:0.06em;
+  touch-action:manipulation}
+.abtn{display:none;width:100%;padding:14px;
+  background:linear-gradient(135deg,#5e9458,#3a6e3e);color:#fff;
+  border:none;border-radius:12px;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:inherit;letter-spacing:0.06em;
+  box-shadow:0 4px 16px rgba(70,120,60,0.25);touch-action:manipulation}
+.abtn:disabled{opacity:0.65}
+.errmsg{color:#b03030;text-align:center;font-size:13px;margin-top:10px;line-height:1.5}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* INFO HEADER */
-.info-header{background:linear-gradient(135deg,#f0f7ec,#faf7f0);
-  padding:28px 24px 22px;text-align:center;
-  border-bottom:1.5px solid #ddeedd;position:relative}
-.info-tag{font-size:11px;color:var(--green);letter-spacing:0.2em;font-weight:700;
-  margin-bottom:8px;background:var(--green-pale);display:inline-block;
-  padding:3px 12px;border-radius:20px}
-.info-title{font-size:26px;font-weight:900;color:var(--dark);
-  letter-spacing:0.1em;margin-bottom:10px;cursor:text;
-  border-bottom:1px dashed transparent;transition:border-color 0.2s}
-.info-title:hover{border-bottom-color:#c4dab8}
-.info-intro{font-size:13px;color:var(--mid);line-height:1.9;
-  max-width:520px;margin:0 auto;cursor:text}
-
-/* INFO BODY */
-.info-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.info-col{padding:20px}
-.info-col-left{border-right:1px solid #eef4ee}
-.col-title{font-size:13px;font-weight:800;color:var(--dark);
-  margin-bottom:14px;padding-bottom:8px;
-  border-bottom:2px solid #c4dab8;letter-spacing:0.06em}
-
-/* CENTER IMAGE */
-.info-center{border-top:1.5px solid #eef4ee;border-bottom:1.5px solid #eef4ee;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:20px;background:linear-gradient(180deg,#fafdf8,#f5f8f2)}
-.center-circle{width:180px;height:180px;border-radius:50%;overflow:hidden;
-  border:5px solid #c8dfc4;box-shadow:0 8px 32px rgba(70,110,60,0.2);margin-bottom:14px}
-.center-circle img{width:100%;height:100%;object-fit:cover}
-.color-palette{display:flex;gap:6px;justify-content:center;margin-top:4px}
-.color-dot{width:24px;height:24px;border-radius:50%;
-  border:2px solid rgba(255,255,255,0.8);box-shadow:0 2px 6px rgba(0,0,0,0.12)}
-.palette-label{font-size:10px;color:#8aaa80;text-align:center;
-  margin-bottom:6px;letter-spacing:0.1em}
-
-/* FLOWER ITEMS */
-.flower-item{display:flex;gap:10px;align-items:flex-start;
-  background:linear-gradient(135deg,rgba(232,244,228,0.8),rgba(244,240,230,0.5));
-  border-radius:12px;padding:10px 12px;margin-bottom:8px;
-  border:1px solid rgba(170,205,160,0.4);cursor:text}
-.flower-emoji{font-size:26px;line-height:1;flex-shrink:0}
-.flower-role{font-size:10px;color:var(--green);font-weight:800;
-  letter-spacing:0.1em;margin-bottom:2px}
-.flower-name{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;
-  outline:none;min-width:20px}
-.flower-desc{font-size:11.5px;color:var(--mid);line-height:1.65;
-  outline:none;min-width:20px}
-
-/* AESTHETIC ITEMS */
-.aesthetic-item{display:flex;gap:10px;align-items:flex-start;
-  background:linear-gradient(135deg,rgba(244,238,226,0.8),rgba(230,242,226,0.5));
-  border-radius:12px;padding:10px 12px;margin-bottom:8px;
-  border:1px solid rgba(198,182,158,0.35);cursor:text}
-.aesthetic-icon{font-size:20px;flex-shrink:0;margin-top:1px}
-.aesthetic-title{font-size:12.5px;font-weight:700;color:var(--dark);
-  margin-bottom:2px;outline:none;min-width:20px}
-.aesthetic-desc{font-size:11.5px;color:#686860;line-height:1.65;
-  outline:none;min-width:20px}
-
-/* FULL WIDTH SECTION */
-.info-full{padding:16px 20px;background:#fafdf8;border-top:1px solid #eef4ee}
-
-/* DOWNLOAD */
-.download-bar{padding:16px 20px;background:linear-gradient(135deg,#f0f7ec,#faf7f0);
-  border-top:1.5px solid #ddeedd;display:flex;gap:10px;align-items:center;justify-content:center}
-.download-btn{padding:12px 28px;background:linear-gradient(135deg,var(--green-light),var(--green));
-  color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;
-  cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(70,120,60,0.28);
-  display:flex;align-items:center;gap:8px;touch-action:manipulation}
-.download-hint{font-size:11px;color:#9aaa90}
-
-.spinner{width:17px;height:17px;border:2.5px solid rgba(255,255,255,0.3);
+.spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);
   border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;
-  display:inline-block;vertical-align:middle;margin-right:8px}
+  display:inline-block;vertical-align:middle;margin-right:7px}
 
-[contenteditable]:focus{outline:2px solid #a8d0a0;border-radius:4px;padding:1px 3px}
+/* ── INFOGRAPHIC ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.infog{background:var(--cream2);border-radius:24px;overflow:hidden;
+  box-shadow:0 10px 50px rgba(70,110,60,0.14);
+  animation:fadeUp 0.7s ease both;border:1px solid var(--green3)}
+
+/* Title area */
+.ig-title-area{background:linear-gradient(135deg,#f2f8ee,#faf6ee);
+  padding:28px 28px 22px;text-align:center;border-bottom:1.5px solid #ddeedd}
+.ig-badge{display:inline-block;font-size:10px;color:var(--green);font-weight:800;
+  letter-spacing:0.2em;background:var(--green4);padding:3px 14px;
+  border-radius:20px;margin-bottom:10px;border:1px solid var(--green3)}
+.ig-maintitle{font-size:24px;font-weight:900;color:var(--dark);
+  letter-spacing:0.1em;margin-bottom:4px;line-height:1.3}
+.ig-intro-label{font-size:11px;color:var(--light);letter-spacing:0.08em;
+  margin:10px 0 8px;font-weight:600}
+.ig-intro{font-size:12.5px;color:var(--mid);line-height:1.95;
+  max-width:580px;margin:0 auto;text-align:left}
+
+/* Main layout */
+.ig-main{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #e4eed8}
+
+/* Left col */
+.ig-left{padding:20px 18px;border-right:1px solid #e4eed8}
+.ig-right{padding:20px 18px}
+.col-hd{font-size:13px;font-weight:800;color:var(--dark);
+  padding-bottom:9px;border-bottom:2px solid var(--green3);
+  margin-bottom:14px;letter-spacing:0.06em}
+
+/* Flower card */
+.fc{background:linear-gradient(135deg,rgba(228,244,224,0.9),rgba(244,240,230,0.6));
+  border-radius:13px;padding:11px 13px;margin-bottom:9px;
+  border:1px solid rgba(168,204,158,0.45);display:flex;gap:10px;align-items:flex-start}
+.fc-emoji{font-size:28px;line-height:1;flex-shrink:0;margin-top:2px}
+.fc-body{flex:1;min-width:0}
+.fc-role{font-size:9.5px;color:var(--green);font-weight:800;
+  letter-spacing:0.12em;margin-bottom:3px;text-transform:uppercase}
+.fc-name{font-size:13px;font-weight:700;color:var(--dark);
+  margin-bottom:3px;line-height:1.3}
+.fc-desc{font-size:11px;color:var(--mid);line-height:1.7}
+
+/* Aesthetic card */
+.ac{background:linear-gradient(135deg,rgba(244,238,226,0.9),rgba(230,242,226,0.5));
+  border-radius:13px;padding:11px 13px;margin-bottom:9px;
+  border:1px solid rgba(198,182,158,0.38);display:flex;gap:10px;align-items:flex-start}
+.ac-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.ac-title{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.ac-desc{font-size:11px;color:#686860;line-height:1.7}
+
+/* Center image band */
+.ig-center{border-top:1px solid #e4eed8;border-bottom:1px solid #e4eed8;
+  background:linear-gradient(180deg,#f4faf0,#f0f7ea);
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:22px 16px;gap:12px}
+.img-circle{width:170px;height:170px;border-radius:50%;overflow:hidden;
+  border:5px solid #c2dabe;box-shadow:0 8px 32px rgba(60,100,55,0.22)}
+.img-circle img{width:100%;height:100%;object-fit:cover}
+.palette-wrap{text-align:center}
+.palette-label{font-size:10px;color:var(--light);letter-spacing:0.1em;
+  margin-bottom:6px;font-weight:600}
+.palette{display:flex;gap:5px;justify-content:center}
+.dot{width:22px;height:22px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.85);
+  box-shadow:0 2px 7px rgba(0,0,0,0.13)}
+
+/* Footer */
+.ig-footer{background:linear-gradient(135deg,#eef6ea,#f5f0e6);
+  border-top:1.5px solid #ddeedd;padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ig-footer-hint{font-size:11px;color:var(--light);display:flex;align-items:center;gap:5px}
+.footer-btns{display:flex;gap:8px}
+.dl-btn{padding:10px 20px;background:linear-gradient(135deg,var(--green2),var(--green));
+  color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;
+  box-shadow:0 3px 12px rgba(70,120,60,0.25);touch-action:manipulation}
+.reset-btn{padding:10px 16px;background:#fff;color:var(--mid);
+  border:1.5px solid var(--green3);border-radius:10px;font-size:13px;
+  font-weight:600;cursor:pointer;font-family:inherit;touch-action:manipulation}
+
+/* Editable highlight */
+[contenteditable]{outline:none;cursor:text;border-radius:4px;
+  transition:background 0.15s,box-shadow 0.15s;display:inline-block;min-width:10px}
+[contenteditable]:hover{background:rgba(120,180,100,0.08)}
+[contenteditable]:focus{background:rgba(120,180,100,0.13);
+  box-shadow:0 0 0 2px rgba(100,160,90,0.35);padding:1px 4px}
+
+/* Toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  background:var(--dark);color:#fff;padding:10px 22px;border-radius:20px;
+  font-size:14px;font-weight:700;z-index:9999;
+  box-shadow:0 4px 18px rgba(0,0,0,0.22);pointer-events:none;
+  animation:fadeUp 0.3s ease;font-family:inherit}
 </style>
 </head>
 <body>
 
 <!-- Settings Modal -->
-<div class="modal-overlay" id="modalOverlay">
+<div class="overlay" id="overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <h3>🔑 API Key 设置</h3>
-    <p>输入你的 OpenRouter API Key（sk-or-v1-...开头）<br/>Key 仅保存在本机浏览器，不会上传服务器</p>
-    <input type="password" id="keyInput" placeholder="sk-or-v1-..."/>
-    <button class="modal-btn" onclick="saveKey()">保存 Key</button>
+    <button class="mclose" onclick="closeModal()">×</button>
+    <h3>⚙️ API Key 设置</h3>
+    <p>输入你的 OpenRouter API Key（sk-or-v1- 开头）<br/>Key 仅存储在本机浏览器，不上传任何服务器。</p>
+    <input type="password" id="keyInput" placeholder="sk-or-v1-xxxxxxxxxxxx"/>
+    <button class="mbtn" onclick="saveKey()">✅ 保存 Key</button>
   </div>
 </div>
 
 <!-- Header -->
-<div class="header">
-  <button class="settings-btn" onclick="openModal()" title="API Key 设置">⚙️</button>
-  <div class="header-icon">🌸</div>
+<div class="hdr">
+  <button class="gear-btn" onclick="openModal()" title="设置 API Key">⚙️</button>
+  <div style="font-size:50px">🌸</div>
   <h1>花艺智析</h1>
   <p>上传花艺作品 · AI 生成专业解析报告</p>
 </div>
@@ -182,111 +192,119 @@ body{min-height:100vh;background:var(--cream);font-family:'Noto Serif SC',Georgi
 <div class="wrap">
   <!-- Upload -->
   <div class="upload-card">
-    <div class="upload-zone" id="uploadZone">
-      <div class="upload-ph" id="uploadPh">
-        <span class="emoji">🌿</span>
-        <p>上传你的花艺作品</p>
-        <span>支持 JPG · PNG · WEBP</span>
+    <div class="drop-zone" id="dropZone">
+      <div class="ph" id="ph">
+        <span class="big">🌿</span>
+        <p class="t">上传你的花艺作品</p>
+        <span class="s">支持 JPG · PNG · WEBP · HEIC</span>
       </div>
     </div>
-    <label class="upload-label" for="fileInput">📷 选择花艺图片</label>
+    <label class="ulabel" for="fileInput">📷 选择花艺图片</label>
     <input type="file" id="fileInput" accept="image/*" style="display:none"/>
-    <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">✨ 开始 AI 智能分析</button>
-    <p class="err" id="errMsg"></p>
+    <button class="abtn" id="abtn" onclick="analyze()">✨ 开始 AI 深度分析</button>
+    <p class="errmsg" id="errmsg"></p>
   </div>
 
-  <!-- Infographic Result -->
   <div id="resultWrap"></div>
 </div>
 
 <script>
-const SYSTEM_PROMPT = `你是顶级花艺设计师兼植物学家，拥有20年专业花卉识别经验。请仔细分析图片中花艺作品的每一种花材，包括花朵形态、叶片形状、茎干特征、颜色等细节。
+// ── SYSTEM PROMPT (专业强化版) ──
+const PROMPT = `你是拥有20年经验的顶级花艺设计师兼植物分类学家，擅长精确识别各类花卉品种。
 
-严格只返回JSON，不含任何markdown标记或额外文字：
+请极其仔细地分析图片中的花艺作品。对每种花材，观察：
+- 花瓣数量、形状、排列方式
+- 花朵整体轮廓（球形/菊形/喇叭形/管状等）
+- 花色细节（纯色/渐变/斑点/镶边）
+- 叶片形状（圆形/椭圆/针形/心形）、叶脉、质感
+- 茎干特征（粗细、颜色、有无绒毛/刺）
+- 果实或种荚特征（如有）
+
+常见易混淆花材区分指南：
+- 非洲菊 vs 雏菊：非洲菊花茎粗、花朵大（8-12cm）；雏菊小而多
+- 洋牡丹（芍药型陆莲）vs 牡丹：洋牡丹花朵紧实层叠，无木质茎
+- 尤加利 vs 其他圆叶：尤加利叶对生、蓝绿色、有香气质感
+- 康乃馨 vs 石竹：康乃馨花瓣边缘锯齿状，花萼筒状
+- 满天星 vs 石膏花：满天星极小白花密集成云雾状
+
+严格只返回如下JSON，不含任何markdown或额外文字：
 {
-  "title": "作品风格标题（6-10字，有意境）",
-  "subtitle": "风格流派·设计美学（如：自然主义·侘寂风格）",
-  "introduction": "专业介绍（60字，包含整体美学评价）",
+  "title": "有意境的作品标题（6-10字）",
+  "subtitle": "风格流派描述（如：自然主义·侘寂美学）",
+  "introduction": "专业美学评价（70字，涵盖整体印象、空间感、情绪表达）",
   "flowers": [
     {
-      "name": "花材中文名（要精确，如：白色非洲菊、尤加利叶、绿色康乃馨）",
-      "role": "在作品中的角色（焦点花/填充花/骨架材料/点缀花/叶材）",
-      "description": "形态特征与在作品中的作用（25字）",
+      "name": "精确花材名（如：白色非洲菊、银叶尤加利、绿色康乃馨、文心兰）",
+      "role": "焦点花|填充花|骨架材料|点缀花|叶材|果实枝条",
+      "description": "形态特征+在作品中的视觉作用（28字）",
       "emoji": "最接近的emoji"
     }
   ],
   "style": {
-    "title": "整体风格名称",
-    "description": "风格特点与空间感描述（35字）"
+    "title": "整体风格（4-6字）",
+    "description": "风格特点、空间感与情绪表达（38字）"
   },
   "colorScheme": {
-    "title": "色彩方案名称",
-    "description": "色彩搭配逻辑与视觉效果（35字）",
-    "colors": ["从图片提取的5个主要hex颜色"]
+    "title": "色彩方案名（4-6字）",
+    "description": "色彩搭配逻辑与视觉层次感（38字）",
+    "colors": ["图片实际5个主色hex值"]
   },
   "vase": {
-    "title": "容器搭配评价",
-    "description": "容器材质、造型与花材的呼应关系（35字）"
+    "title": "容器评价（4-6字）",
+    "description": "材质、造型与花材的呼应关系（38字）"
   },
   "composition": {
-    "title": "构成技法",
-    "description": "具体的空间构成手法与视觉重心（35字）"
+    "title": "构成技法（4-6字）",
+    "description": "空间层次、视觉重心与线条走势（38字）"
   }
 }
+flowers必须包含图中所有可辨认花材，至少5种。`;
 
-注意：flowers数组必须包含图中所有可见花材，至少4种，最多8种。颜色必须从图片实际提取。`;
+let b64=null, mime="image/jpeg", imgUrl=null;
 
-let imageBase64=null, imageMime="image/jpeg", imageUrl=null;
-
-// Key management
+// Key
 window.addEventListener('DOMContentLoaded',()=>{
-  try{
-    const k=localStorage.getItem('or_key');
+  try{ const k=localStorage.getItem('or_key');
     if(k) document.getElementById('keyInput').value=k;
-    else setTimeout(openModal, 800);
+    else setTimeout(openModal,600);
   }catch(e){}
 });
-function openModal(){document.getElementById('modalOverlay').classList.add('open')}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open')}
+function openModal(){document.getElementById('overlay').classList.add('open')}
+function closeModal(){document.getElementById('overlay').classList.remove('open')}
+document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
 function saveKey(){
   const v=document.getElementById('keyInput').value.trim();
-  if(!v){alert('请输入 API Key');return;}
+  if(!v){toast('请先输入 API Key');return;}
   try{localStorage.setItem('or_key',v);}catch(e){}
-  closeModal();
-  showToast('✅ API Key 已保存');
+  closeModal(); toast('✅ API Key 已保存');
 }
-function getKey(){
-  try{return localStorage.getItem('or_key')||'';}catch(e){return '';}
-}
-function showToast(msg){
-  const t=document.createElement('div');
-  t.textContent=msg;
-  Object.assign(t.style,{position:'fixed',bottom:'30px',left:'50%',transform:'translateX(-50%)',
-    background:'#3a6e3e',color:'#fff',padding:'10px 22px',borderRadius:'20px',
-    fontSize:'14px',fontWeight:'700',zIndex:'9999',fontFamily:'inherit',
-    boxShadow:'0 4px 16px rgba(0,0,0,0.2)'});
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),2500);
-}
-document.getElementById('modalOverlay').addEventListener('click',function(e){
-  if(e.target===this) closeModal();
-});
+function getKey(){try{return localStorage.getItem('or_key')||'';}catch(e){return '';}}
 
-// File handling
-document.getElementById('fileInput').addEventListener('change',function(e){
+function toast(msg,dur=2400){
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),dur);
+}
+
+// Upload
+document.getElementById('fileInput').addEventListener('change',e=>{
   if(e.target.files[0]) loadFile(e.target.files[0]);
 });
+const dz=document.getElementById('dropZone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.style.borderColor='var(--green)'});
+dz.addEventListener('dragleave',()=>{dz.style.borderColor='var(--green3)'});
+dz.addEventListener('drop',e=>{e.preventDefault();dz.style.borderColor='var(--green3)';
+  if(e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);});
+
 function loadFile(file){
-  if(!file.type.startsWith('image/')){alert('请选择图片文件');return;}
-  imageMime=file.type; imageUrl=URL.createObjectURL(file);
-  const zone=document.getElementById('uploadZone');
-  zone.innerHTML=`<img src="${imageUrl}" alt="预览"/>`;
-  zone.classList.add('has-image');
-  document.getElementById('analyzeBtn').style.display='block';
+  if(!file.type.startsWith('image/')){toast('请选择图片文件');return;}
+  mime=file.type; imgUrl=URL.createObjectURL(file);
+  dz.innerHTML=`<img src="${imgUrl}"/>`;
+  dz.classList.add('filled');
+  document.getElementById('abtn').style.display='block';
   document.getElementById('resultWrap').innerHTML='';
-  document.getElementById('errMsg').textContent='';
+  document.getElementById('errmsg').textContent='';
   const r=new FileReader();
-  r.onload=e=>{imageBase64=e.target.result.split(',')[1];};
+  r.onload=e=>{b64=e.target.result.split(',')[1];};
   r.readAsDataURL(file);
 }
 
@@ -294,11 +312,11 @@ function loadFile(file){
 async function analyze(){
   const key=getKey();
   if(!key){openModal();return;}
-  if(!imageBase64){alert('请先选择图片');return;}
-  const btn=document.getElementById('analyzeBtn');
+  if(!b64){toast('请先选择图片');return;}
+  const btn=document.getElementById('abtn');
   btn.disabled=true;
   btn.innerHTML='<span class="spinner"></span>AI 深度识别花材中...';
-  document.getElementById('errMsg').textContent='';
+  document.getElementById('errmsg').textContent='';
   try{
     const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
       method:'POST',
@@ -306,127 +324,147 @@ async function analyze(){
       body:JSON.stringify({
         model:'google/gemini-2.0-flash-001',
         messages:[{role:'user',content:[
-          {type:'text',text:SYSTEM_PROMPT},
-          {type:'image_url',image_url:{url:`data:${imageMime};base64,${imageBase64}`}}
+          {type:'text',text:PROMPT},
+          {type:'image_url',image_url:{url:`data:${mime};base64,${b64}`}}
         ]}]
       })
     });
     const data=await res.json();
-    if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
-    const text=data.choices?.[0]?.message?.content||'';
-    const clean=text.replace(/```json|```/g,'').trim();
-    const r=JSON.parse(clean);
-    renderInfograhic(r);
+    if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));
+    const raw=data.choices?.[0]?.message?.content||'';
+    const clean=raw.replace(/```json|```/g,'').trim();
+    render(JSON.parse(clean));
   }catch(e){
-    document.getElementById('errMsg').textContent='分析失败：'+e.message;
+    document.getElementById('errmsg').textContent='分析失败：'+e.message;
   }finally{
-    btn.disabled=false;
-    btn.innerHTML='✨ 重新分析';
+    btn.disabled=false;btn.innerHTML='✨ 重新分析';
   }
 }
 
-function ce(tag,cls,html,attrs){
-  const el=document.createElement(tag);
-  if(cls) el.className=cls;
-  if(html) el.innerHTML=html;
-  if(attrs) Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
-  return el;
-}
-function editable(el){el.contentEditable='true';return el;}
+// ── RENDER ──
+function E(tag,cls,html){const el=document.createElement(tag);if(cls)el.className=cls;if(html!==undefined)el.innerHTML=html;return el;}
+function ed(el){el.contentEditable='true';return el;}
 
-function renderInfograhic(r){
+function render(r){
   const wrap=document.getElementById('resultWrap');
   wrap.innerHTML='';
-  const info=ce('div','infographic');
+  const ig=E('div','infog');
 
-  // Header
-  const hdr=ce('div','info-header');
-  const tag=ce('div','info-tag',r.subtitle||'');
-  const title=editable(ce('div','info-title',r.title||''));
-  const intro=editable(ce('div','info-intro',r.introduction||''));
-  hdr.append(tag,title,intro);
-  info.appendChild(hdr);
+  // Title area
+  const ta=E('div','ig-title-area');
+  const badge=ed(E('div','ig-badge',r.subtitle||''));
+  const title=ed(E('div','ig-maintitle',r.title||''));
+  const ilabel=E('div','ig-intro-label','作品介绍');
+  const intro=ed(E('div','ig-intro',r.introduction||''));
+  ta.append(badge,title,ilabel,intro);
+  ig.appendChild(ta);
 
-  // Center image strip
-  const centerStrip=ce('div','info-center');
-  const circle=ce('div','center-circle');
-  circle.innerHTML=`<img src="${imageUrl}" alt="花艺"/>`;
-  const plabel=ce('div','palette-label','色彩提取');
-  const palette=ce('div','color-palette');
+  // Center image band
+  const cb=E('div','ig-center');
+  const circ=E('div','img-circle');
+  circ.innerHTML=`<img src="${imgUrl}" alt="花艺"/>`;
+  const pw=E('div','palette-wrap');
+  pw.appendChild(E('div','palette-label','色彩提取'));
+  const pal=E('div','palette');
   (r.colorScheme?.colors||[]).forEach(c=>{
-    const dot=ce('div','color-dot');
-    dot.style.background=c; dot.title=c;
-    palette.appendChild(dot);
+    const d=E('div','dot');d.style.background=c;d.title=c;pal.appendChild(d);
   });
-  centerStrip.append(circle,plabel,palette);
-  info.appendChild(centerStrip);
+  pw.appendChild(pal);
+  cb.append(circ,pw);
+  ig.appendChild(cb);
 
-  // Two columns
-  const body=ce('div','info-body');
+  // Two-col main
+  const main=E('div','ig-main');
 
   // Left: flowers
-  const left=ce('div','info-col info-col-left');
-  left.appendChild(ce('div','col-title','🌺 花材成分识别'));
+  const left=E('div','ig-left');
+  left.appendChild(E('div','col-hd','🌺 花材成分识别'));
   (r.flowers||[]).forEach(f=>{
-    const item=ce('div','flower-item');
-    const emoji=ce('span','flower-emoji',f.emoji||'🌸');
-    const info2=ce('div');
-    const role=ce('div','flower-role',f.role||'');
-    const name=editable(ce('div','flower-name',f.name||''));
-    const desc=editable(ce('div','flower-desc',f.description||''));
-    info2.append(role,name,desc);
-    item.append(emoji,info2);
-    left.appendChild(item);
+    const fc=E('div','fc');
+    const emoji=E('span','fc-emoji',f.emoji||'🌸');
+    const body=E('div','fc-body');
+    const role=E('div','fc-role',f.role||'');
+    const name=ed(E('div','fc-name',f.name||''));
+    const desc=ed(E('div','fc-desc',f.description||''));
+    body.append(role,name,desc);
+    fc.append(emoji,body);
+    left.appendChild(fc);
   });
+  // Add flower btn
+  const addBtn=E('button','','＋ 添加花材');
+  Object.assign(addBtn.style,{background:'none',border:'1.5px dashed var(--green3)',
+    borderRadius:'10px',width:'100%',padding:'8px',color:'var(--green)',
+    fontSize:'13px',fontWeight:'700',cursor:'pointer',marginTop:'4px',fontFamily:'inherit'});
+  addBtn.onclick=()=>addFlower(left,addBtn);
+  left.appendChild(addBtn);
 
   // Right: aesthetics
-  const right=ce('div','info-col');
-  right.appendChild(ce('div','col-title','🎨 设计美学解析'));
-  [
-    ['🌿',r.style],['🎨',r.colorScheme],['🏺',r.vase],['✦',r.composition]
-  ].forEach(([icon,d])=>{
-    if(!d) return;
-    const item=ce('div','aesthetic-item');
-    const ic=ce('span','aesthetic-icon',icon);
-    const info3=ce('div');
-    const t=editable(ce('div','aesthetic-title',d.title||''));
-    const de=editable(ce('div','aesthetic-desc',d.description||''));
-    info3.append(t,de);
-    item.append(ic,info3);
-    right.appendChild(item);
+  const right=E('div','ig-right');
+  right.appendChild(E('div','col-hd','🎨 设计美学解析'));
+  [['🌿',r.style],['🎨',r.colorScheme],['🏺',r.vase],['✦',r.composition]].forEach(([icon,d])=>{
+    if(!d)return;
+    const ac=E('div','ac');
+    const ic=E('span','ac-icon',icon);
+    const body=E('div');
+    const t=ed(E('div','ac-title',d.title||''));
+    const de=ed(E('div','ac-desc',d.description||''));
+    body.append(t,de);
+    ac.append(ic,body);
+    right.appendChild(ac);
   });
 
-  body.append(left,right);
-  info.appendChild(body);
+  main.append(left,right);
+  ig.appendChild(main);
 
-  // Download bar
-  const bar=ce('div','download-bar');
-  const hint=ce('div','download-hint','所有文字均可点击编辑');
-  const dlBtn=ce('button','download-btn','📥 下载分析图');
-  dlBtn.onclick=()=>downloadImage(info);
-  bar.append(hint,dlBtn);
-  info.appendChild(bar);
+  // Footer
+  const footer=E('div','ig-footer');
+  const hint=E('div','ig-footer-hint','✏️ 所有文字均可点击编辑');
+  const btns=E('div','footer-btns');
+  const resetBtn=E('button','reset-btn','↺ 重新分析');
+  resetBtn.onclick=()=>{
+    document.getElementById('abtn').click();
+  };
+  const dlBtn=E('button','dl-btn','📥 下载分析图');
+  dlBtn.onclick=()=>download(ig,footer);
+  btns.append(resetBtn,dlBtn);
+  footer.append(hint,btns);
+  ig.appendChild(footer);
 
-  wrap.appendChild(info);
-  info.scrollIntoView({behavior:'smooth',block:'start'});
+  wrap.appendChild(ig);
+  setTimeout(()=>ig.scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
 
-async function downloadImage(el){
-  const bar=el.querySelector('.download-bar');
-  bar.style.display='none';
-  // temporarily disable contenteditable outlines
-  const editables=el.querySelectorAll('[contenteditable]');
-  editables.forEach(e=>e.removeAttribute('contenteditable'));
+function addFlower(container,addBtn){
+  const fc=document.createElement('div');fc.className='fc';
+  const emoji=document.createElement('span');emoji.className='fc-emoji';
+  emoji.textContent='🌸';emoji.contentEditable='true';
+  const body=document.createElement('div');body.className='fc-body';
+  const role=document.createElement('div');role.className='fc-role';
+  role.textContent='点击编辑角色';role.contentEditable='true';
+  const name=document.createElement('div');name.className='fc-name';
+  name.textContent='花材名称';name.contentEditable='true';
+  const desc=document.createElement('div');desc.className='fc-desc';
+  desc.textContent='描述花材特征与作用';desc.contentEditable='true';
+  body.append(role,name,desc);fc.append(emoji,body);
+  container.insertBefore(fc,addBtn);
+  name.focus();
+}
+
+async function download(ig,footer){
+  footer.style.display='none';
+  const eds=ig.querySelectorAll('[contenteditable]');
+  eds.forEach(e=>{e.removeAttribute('contenteditable');e.style.background='none';e.style.boxShadow='none';});
   try{
-    const canvas=await html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#ffffff'});
-    const link=document.createElement('a');
-    link.download='花艺智析报告.png';
-    link.href=canvas.toDataURL('image/png');
-    link.click();
-  }catch(e){alert('下载失败：'+e.message);}
+    const canvas=await html2canvas(ig,{scale:2.5,useCORS:true,backgroundColor:'#faf6ee',
+      logging:false,allowTaint:true});
+    const a=document.createElement('a');
+    a.download='花艺智析_'+Date.now()+'.png';
+    a.href=canvas.toDataURL('image/png');a.click();
+    toast('📥 下载成功！');
+  }catch(e){toast('下载失败：'+e.message);}
   finally{
-    bar.style.display='flex';
-    editables.forEach(e=>e.contentEditable='true');
+    footer.style.display='flex';
+    eds.forEach(e=>{e.contentEditable='true';});
   }
 }
 </script>
