@@ -9,14 +9,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --g1:#3a6840;--g2:#68a86c;--g3:#b4d4b0;--g4:#e4f2e0;
-  --cream:#f5f0e6;--cream2:#faf8f0;--dark:#1a2a1a;--mid:#52645a;--lt:#96a88e;
-  --sand:#e8dfc8;--sand2:#f0e8d4;
+  --g1:#2e5e34;--g2:#5a9e60;--g3:#a8cc9e;--g4:#dff0da;
+  --cream:#f4ede0;--cream2:#faf6ec;--dark:#1a2818;--mid:#4a5e48;--lt:#8a9e82;
+  --accent:#c8a86e;--accent2:#e8c88e;
 }
 body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-height:100vh}
 
-/* ── MODAL ── */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px}
+/* MODAL */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px}
 .ov.open{display:flex}
 .modal{background:#fff;border-radius:22px;padding:28px 24px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.22)}
 .modal h3{font-size:17px;color:var(--dark);margin-bottom:6px;font-weight:900}
@@ -26,9 +26,9 @@ body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-heigh
 .mbtn{width:100%;padding:13px;background:linear-gradient(135deg,var(--g2),var(--g1));color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}
 .mx{float:right;background:none;border:none;font-size:24px;cursor:pointer;color:#ccc;line-height:1}
 
-/* ── APP HEADER ── */
+/* APP HEADER */
 .app-hdr{text-align:center;padding:28px 20px 14px;position:relative;
-  background:linear-gradient(180deg,rgba(220,238,216,0.7),transparent)}
+  background:linear-gradient(180deg,rgba(216,236,210,0.8),transparent)}
 .gear-btn{position:absolute;right:18px;top:28px;width:42px;height:42px;border-radius:50%;
   background:rgba(255,255,255,0.94);border:1.5px solid var(--g3);font-size:18px;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
@@ -36,138 +36,169 @@ body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-heigh
 .app-hdr h1{font-size:29px;font-weight:900;color:var(--dark);letter-spacing:0.12em;margin:6px 0 4px}
 .app-hdr p{font-size:12px;color:var(--lt);letter-spacing:0.06em}
 
-/* ── UPLOAD ── */
-.wrap{max-width:880px;margin:0 auto;padding:0 16px 80px}
+/* UPLOAD */
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
 .ucard{background:rgba(255,255,255,0.9);border-radius:22px;padding:20px;margin-bottom:20px;
-  box-shadow:0 4px 28px rgba(60,110,55,0.1);border:1px solid rgba(130,165,118,0.2)}
+  box-shadow:0 4px 28px rgba(50,100,45,0.1);border:1px solid rgba(120,160,108,0.2)}
 .dz{position:relative;border-radius:18px;overflow:hidden;margin-bottom:14px;
-  background:linear-gradient(135deg,#ebf5e7,#f3f9ef);border:2px dashed var(--g3);
+  background:linear-gradient(135deg,#e8f2e4,#f0f8ec);border:2px dashed var(--g3);
   min-height:230px;display:flex;align-items:center;justify-content:center;transition:all 0.3s}
-.dz.has-img{border-style:solid;min-height:300px;background:#fdfdf9}
-.dz img{width:100%;max-height:380px;object-fit:contain;padding:10px;
-  border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.07)}
-.ph{text-align:center;padding:38px 20px}
-.ph-i{font-size:54px;display:block;margin-bottom:11px;filter:drop-shadow(0 3px 8px rgba(70,130,65,0.2))}
+.dz.has-img{border-style:solid;min-height:290px;background:#fdfdf8}
+.dz img{width:100%;max-height:360px;object-fit:contain;padding:10px;border-radius:12px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.07)}
+.ph{text-align:center;padding:36px 20px}
+.ph-i{font-size:52px;display:block;margin-bottom:10px;filter:drop-shadow(0 3px 8px rgba(60,120,55,0.2))}
 .ph-t{font-size:14px;color:var(--dark);font-weight:700;margin-bottom:4px}
 .ph-s{font-size:11px;color:var(--lt)}
 .ulbl{display:block;width:100%;padding:14px;text-align:center;
-  background:linear-gradient(135deg,#78b872,var(--g1));color:#fff;border-radius:12px;
+  background:linear-gradient(135deg,#74b46e,var(--g1));color:#fff;border-radius:12px;
   font-size:15px;font-weight:800;cursor:pointer;margin-bottom:10px;
-  box-shadow:0 4px 16px rgba(55,105,50,0.28);letter-spacing:0.06em}
+  box-shadow:0 4px 16px rgba(45,95,40,0.28);letter-spacing:0.06em}
 .abtn{display:none;width:100%;padding:14px;
-  background:linear-gradient(135deg,#4c8248,#2c5c30);color:#fff;border:none;
+  background:linear-gradient(135deg,#486e44,#28502c);color:#fff;border:none;
   border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;
-  font-family:inherit;letter-spacing:0.06em;box-shadow:0 4px 16px rgba(55,105,50,0.28)}
+  font-family:inherit;letter-spacing:0.06em;box-shadow:0 4px 16px rgba(45,95,40,0.28)}
 .abtn:disabled{opacity:0.65}
 .errmsg{color:#b03030;text-align:center;font-size:13px;margin-top:10px;line-height:1.5}
 @keyframes spin{to{transform:rotate(360deg)}}
 .sp{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.28);border-top-color:#fff;
   border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
 
-/* ════════════════════════════════════
-   INFOGRAPHIC
-════════════════════════════════════ */
+/* ════════ INFOGRAPHIC ════════ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
 .ig-outer{animation:fadeUp 0.65s ease both;border-radius:24px;overflow:hidden;
-  box-shadow:0 12px 56px rgba(50,90,45,0.16);border:1.5px solid var(--g3)}
+  box-shadow:0 14px 60px rgba(40,80,38,0.18);border:1.5px solid var(--g3)}
 
-/* ── Header block ── */
-.ig-hdr{background:linear-gradient(160deg,#eff8eb 0%,var(--cream2) 100%);
-  padding:28px 36px 22px;text-align:center;border-bottom:1px solid #d6ecd0}
+/* Header */
+.ig-hdr{background:linear-gradient(160deg,#eaf4e4 0%,var(--cream2) 60%,#f6f0e4 100%);
+  padding:30px 40px 24px;text-align:center;border-bottom:1.5px solid #cce4c4;
+  position:relative}
+.ig-hdr::after{content:'';position:absolute;bottom:0;left:10%;right:10%;
+  height:1px;background:linear-gradient(90deg,transparent,var(--g3),transparent)}
+.ig-title-wrap{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.ig-title-deco{color:var(--accent);font-size:20px;opacity:0.7}
 .ig-maintitle{font-size:26px;font-weight:900;color:var(--dark);
-  letter-spacing:0.12em;line-height:1.35;margin-bottom:12px}
-.ig-intro-wrap{max-width:680px;margin:0 auto;text-align:left;
-  background:rgba(255,255,255,0.6);border-radius:12px;padding:12px 16px;
-  border:1px solid rgba(180,212,176,0.4)}
+  letter-spacing:0.14em;line-height:1.3}
+.ig-subtitle{font-size:11px;color:var(--g2);letter-spacing:0.2em;
+  font-weight:700;margin-bottom:14px;
+  background:var(--g4);display:inline-block;padding:3px 14px;
+  border-radius:20px;border:1px solid var(--g3)}
+.ig-intro-box{max-width:660px;margin:0 auto;
+  background:rgba(255,255,255,0.65);border-radius:12px;
+  padding:12px 18px;border-left:3px solid var(--g3)}
 .ig-intro-lbl{font-size:9px;font-weight:800;color:var(--g1);letter-spacing:0.2em;margin-bottom:5px}
-.ig-intro-text{font-size:12.5px;color:var(--mid);line-height:2}
+.ig-intro-text{font-size:12.5px;color:var(--mid);line-height:2.0}
 
-/* ── Board: the draggable canvas ── */
+/* Board */
 .ig-board{position:relative;width:100%;background:var(--cream2);overflow:hidden}
-.board-bg{position:absolute;inset:0;pointer-events:none;
-  background-image:radial-gradient(circle,rgba(160,200,150,0.12) 1px,transparent 1px);
-  background-size:28px 28px}
+.board-bg-pattern{position:absolute;inset:0;pointer-events:none;opacity:0.5;
+  background-image:
+    radial-gradient(circle,rgba(140,190,130,0.15) 1px,transparent 1px);
+  background-size:24px 24px}
+.board-deco-circle{position:absolute;border-radius:50%;pointer-events:none}
 
-/* SVG lines layer */
-.lines-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.lines-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 
-/* Center photo */
-.center-photo{position:absolute;z-index:10;transform:translate(-50%,-50%);
+/* Center photo - resizable */
+.center-wrap{position:absolute;z-index:15;transform:translate(-50%,-50%);
   display:flex;flex-direction:column;align-items:center;gap:10px}
-.photo-outer{width:220px;height:220px;border-radius:50%;
-  background:radial-gradient(circle,rgba(224,244,220,0.6),transparent);
+.photo-resizer{position:relative;display:inline-block}
+.photo-outer-ring{border-radius:50%;border:1px dashed rgba(90,148,82,0.3);
   display:flex;align-items:center;justify-content:center;
-  border:1px dashed rgba(100,155,90,0.3)}
-.photo-mid{width:204px;height:204px;border-radius:50%;overflow:hidden;
-  border:4px solid #bacdb6;
-  box-shadow:0 8px 36px rgba(45,85,42,0.24),inset 0 0 0 2px rgba(255,255,255,0.4)}
-.photo-mid img{width:100%;height:100%;object-fit:cover}
-.palette-row{display:flex;gap:5px;justify-content:center}
-.p-dot{width:20px;height:20px;border-radius:50%;
-  border:2.5px solid rgba(255,255,255,0.92);box-shadow:0 2px 7px rgba(0,0,0,0.14)}
+  background:radial-gradient(circle,rgba(216,240,210,0.4),transparent)}
+.photo-inner-ring{border-radius:50%;overflow:hidden;
+  border:4px solid #b0caa8;
+  box-shadow:0 8px 36px rgba(38,76,36,0.26),inset 0 0 0 2px rgba(255,255,255,0.35)}
+.photo-inner-ring img{width:100%;height:100%;object-fit:cover;display:block}
+.resize-handle{position:absolute;bottom:-4px;right:-4px;width:18px;height:18px;
+  background:white;border:2px solid var(--g2);border-radius:50%;
+  cursor:se-resize;z-index:20;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  display:flex;align-items:center;justify-content:center;font-size:9px}
+.pal-section{text-align:center}
+.pal-lbl{font-size:9px;color:var(--lt);letter-spacing:0.14em;font-weight:700;margin-bottom:5px}
+.pal-row{display:flex;gap:5px;justify-content:center}
+.pdot{width:20px;height:20px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.92);box-shadow:0 2px 8px rgba(0,0,0,0.16)}
 
 /* Section labels */
-.sec-lbl{position:absolute;z-index:8;font-size:12px;font-weight:900;
+.sec-lbl{position:absolute;z-index:8;font-size:11.5px;font-weight:900;
   color:var(--dark);letter-spacing:0.08em;pointer-events:none;
-  background:var(--cream2);padding:2px 8px;border-radius:20px;
-  border:1px solid var(--g3)}
+  background:rgba(250,246,236,0.92);padding:3px 10px;border-radius:20px;
+  border:1px solid var(--g3);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
 
-/* ── Draggable cards ── */
+/* Draggable cards */
 .dcard{position:absolute;z-index:20;cursor:grab;user-select:none;
-  border-radius:14px;padding:10px 12px;width:180px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.1);transition:box-shadow 0.15s}
-.dcard:active{cursor:grabbing;box-shadow:0 10px 32px rgba(0,0,0,0.18);z-index:30}
-.dcard.flower{background:linear-gradient(145deg,rgba(230,245,226,0.97),rgba(246,242,232,0.9));
-  border:1px solid rgba(155,200,145,0.5)}
-.dcard.aes{background:linear-gradient(145deg,rgba(246,240,226,0.97),rgba(230,244,226,0.9));
-  border:1px solid rgba(192,174,148,0.4)}
-.dcard-drag-handle{position:absolute;top:4px;left:50%;transform:translateX(-50%);
-  width:28px;height:4px;border-radius:2px;background:rgba(0,0,0,0.1)}
-.dcard-del{position:absolute;top:5px;right:6px;background:none;border:none;
-  font-size:13px;cursor:pointer;color:rgba(0,0,0,0.2);line-height:1;padding:0}
-.dcard-del:hover{color:#d04040}
+  border-radius:14px;width:188px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.09);transition:box-shadow 0.15s,transform 0.1s}
+.dcard:hover{box-shadow:0 7px 28px rgba(0,0,0,0.14);transform:translateY(-1px)}
+.dcard:active{cursor:grabbing;box-shadow:0 12px 36px rgba(0,0,0,0.18);
+  transform:scale(1.02);z-index:30}
+.dcard-inner{padding:11px 13px 11px;border-radius:14px}
 
-/* flower card internals */
-.fc-photo{width:50px;height:50px;border-radius:9px;overflow:hidden;flex-shrink:0;
-  border:1.5px solid rgba(140,190,130,0.4);background:#e4f2e0;
-  display:flex;align-items:center;justify-content:center;font-size:22px}
-.fc-photo img{width:100%;height:100%;object-fit:cover}
-.fc-role{font-size:9px;color:var(--g1);font-weight:800;letter-spacing:0.12em;margin-bottom:2px}
-.fc-name{font-size:12.5px;font-weight:800;color:var(--dark);margin-bottom:2px;line-height:1.25}
-.fc-desc{font-size:10px;color:var(--mid);line-height:1.7}
+/* Flower card style */
+.dcard.flower .dcard-inner{
+  background:linear-gradient(145deg,rgba(234,248,230,0.98),rgba(248,244,234,0.92));
+  border:1px solid rgba(148,196,138,0.55)}
+/* Aesthetic card style */
+.dcard.aes .dcard-inner{
+  background:linear-gradient(145deg,rgba(250,244,230,0.98),rgba(232,248,228,0.92));
+  border:1px solid rgba(188,168,138,0.45)}
 
-/* aesthetic card internals */
-.ac-icon{font-size:18px;margin-bottom:4px;display:block}
-.ac-title{font-size:12.5px;font-weight:800;color:var(--dark);margin-bottom:3px}
-.ac-desc{font-size:10.5px;color:#606058;line-height:1.75}
-.ac-swatches{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
-.ac-sw{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(255,255,255,0.8);
-  box-shadow:0 1px 4px rgba(0,0,0,0.12)}
+.dcard-drag-bar{width:30px;height:3.5px;background:rgba(0,0,0,0.1);
+  border-radius:2px;margin:0 auto 8px}
+.dcard-del{position:absolute;top:6px;right:8px;background:none;border:none;
+  font-size:13px;cursor:pointer;color:rgba(0,0,0,0.18);line-height:1;padding:2px}
+.dcard-del:hover{color:#d04040;transform:scale(1.2)}
 
-/* ── Footer ── */
-.ig-foot{background:linear-gradient(135deg,#e8f4e2,#f2ece0);
-  border-top:1.5px solid #d0e8c8;padding:14px 20px;
-  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.foot-hint{font-size:11px;color:var(--lt);display:flex;flex-direction:column;gap:3px}
+/* Flower card content */
+.fc-row{display:flex;gap:9px;align-items:flex-start}
+.fc-photo{width:54px;height:54px;border-radius:10px;overflow:hidden;flex-shrink:0;
+  background:var(--g4);display:flex;align-items:center;justify-content:center;
+  border:1.5px solid rgba(130,182,120,0.45);font-size:26px;position:relative}
+.fc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:9px}
+.fc-photo .fc-photo-emoji{font-size:26px;line-height:1}
+.fc-body{flex:1;min-width:0}
+.fc-role{font-size:9px;color:var(--g1);font-weight:800;letter-spacing:0.12em;margin-bottom:2px;
+  background:var(--g4);display:inline-block;padding:1px 6px;border-radius:8px;border:1px solid var(--g3)}
+.fc-name{font-size:13px;font-weight:900;color:var(--dark);margin:3px 0 2px;line-height:1.25}
+.fc-desc{font-size:10.5px;color:var(--mid);line-height:1.7}
+
+/* Aesthetic card content */
+.ac-head{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.ac-icon-circle{width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--g4),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  border:1px solid rgba(200,168,110,0.3);flex-shrink:0}
+.ac-title{font-size:12.5px;font-weight:900;color:var(--dark)}
+.ac-desc{font-size:10.5px;color:#5e5e50;line-height:1.75}
+.ac-swatches{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap}
+.ac-sw{width:18px;height:18px;border-radius:5px;border:2px solid rgba(255,255,255,0.85);
+  box-shadow:0 1px 4px rgba(0,0,0,0.14)}
+
+/* Footer */
+.ig-foot{background:linear-gradient(135deg,#e4f2de,#f0e8d4);
+  border-top:1.5px solid #c8e0c0;padding:14px 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.foot-hint{font-size:11px;color:var(--lt);display:flex;flex-direction:column;gap:4px}
 .foot-hint span{display:flex;align-items:center;gap:5px}
 .foot-btns{display:flex;gap:8px;flex-wrap:wrap}
 .dl-btn{padding:11px 20px;background:linear-gradient(135deg,var(--g2),var(--g1));
   color:#fff;border:none;border-radius:11px;font-size:13px;font-weight:800;
-  cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(55,105,50,0.28);
-  letter-spacing:0.05em}
-.re-btn{padding:11px 15px;background:#fff;color:var(--mid);
-  border:1.5px solid var(--g3);border-radius:11px;font-size:13px;
-  font-weight:700;cursor:pointer;font-family:inherit}
+  cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(40,95,38,0.28);letter-spacing:0.05em}
+.dl-btn:disabled{opacity:0.6}
+.re-btn{padding:11px 15px;background:#fff;color:var(--mid);border:1.5px solid var(--g3);
+  border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
 .add-btn{padding:11px 15px;background:rgba(255,255,255,0.8);color:var(--g1);
   border:1.5px dashed var(--g3);border-radius:11px;font-size:13px;
   font-weight:700;cursor:pointer;font-family:inherit}
 
 /* Editable */
 [contenteditable]{outline:none;cursor:text;border-radius:3px;transition:background 0.12s}
-[contenteditable]:hover{background:rgba(90,160,80,0.09)}
-[contenteditable]:focus{background:rgba(90,160,80,0.16);
-  box-shadow:0 0 0 2px rgba(70,140,65,0.32);padding:1px 3px}
+[contenteditable]:hover{background:rgba(80,150,70,0.09)}
+[contenteditable]:focus{background:rgba(80,150,70,0.16);
+  box-shadow:0 0 0 2px rgba(60,130,55,0.32);padding:1px 3px}
 
 /* Toast */
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
@@ -178,7 +209,6 @@ body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-heigh
 </head>
 <body>
 
-<!-- Modal -->
 <div class="ov" id="ov">
   <div class="modal">
     <button class="mx" onclick="closeModal()">×</button>
@@ -189,16 +219,14 @@ body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-heigh
   </div>
 </div>
 
-<!-- App Header -->
 <div class="app-hdr">
   <button class="gear-btn" onclick="openModal()">⚙️</button>
-  <div style="font-size:50px;filter:drop-shadow(0 3px 10px rgba(70,130,60,0.2))">🌸</div>
+  <div style="font-size:50px;filter:drop-shadow(0 3px 10px rgba(60,120,55,0.22))">🌸</div>
   <h1>花艺智析</h1>
   <p>上传花艺作品 · AI 深度识别 · 生成可编辑专业解析图</p>
 </div>
 
 <div class="wrap">
-  <!-- Upload -->
   <div class="ucard">
     <div class="dz" id="dz">
       <div class="ph" id="ph">
@@ -212,23 +240,22 @@ body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-heigh
     <button class="abtn" id="abtn" onclick="analyze()">✨ 开始 AI 深度分析</button>
     <p class="errmsg" id="errmsg"></p>
   </div>
-
   <div id="rw"></div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// ── PROMPT ──
 const PROMPT=`你是顶级花艺设计师兼植物分类学家，20年专业经验。仔细识别图中所有花材的花瓣形状、轮廓、颜色、叶形叶脉、茎干特征。
-区分要点：非洲菊(大花8-12cm，粗茎)vs雏菊(小多朵)；洋牡丹/陆莲(多层紧密草本)vs牡丹(木质茎)；尤加利(蓝绿对生圆叶)；康乃馨(锯齿花瓣筒状萼)；满天星(极小白花密集)；绣球(大球状花序)；洋桔梗(喇叭形薄瓣)。
+区分：非洲菊(大花8-12cm，粗茎)vs雏菊(小多朵)；洋牡丹/陆莲(多层紧密草本)vs牡丹(木质茎)；尤加利(蓝绿对生圆叶)；康乃馨(锯齿花瓣筒状萼)；满天星(极小白花密集)；绣球(大球状花序)；洋桔梗(喇叭形薄瓣)。
 严格只返回JSON不含markdown：
-{"title":"标题6-10字","subtitle":"风格流派如自然主义·侘寂美学","introduction":"70字专业美学评价","flowers":[{"name":"精确花材名","searchName":"accurate english name for image search","role":"焦点花|填充花|骨架材料|点缀花|叶材","description":"形态特征与视觉作用25字","emoji":"emoji"}],"style":{"title":"4-6字","description":"38字"},"colorScheme":{"title":"4-6字","description":"38字","colors":["5个实际hex色值"]},"vase":{"title":"4-6字","description":"38字"},"composition":{"title":"4-6字","description":"38字"}}
+{"title":"标题6-10字","subtitle":"风格流派","introduction":"70字专业评价","flowers":[{"name":"精确花材名","emoji":"对应emoji","role":"焦点花|填充花|骨架材料|点缀花|叶材","description":"形态特征与视觉作用25字","color":"该花材主色hex"}],"style":{"title":"4-6字","description":"38字"},"colorScheme":{"title":"4-6字","description":"38字","colors":["5个实际hex"]},"vase":{"title":"4-6字","description":"38字"},"composition":{"title":"4-6字","description":"38字"}}
 flowers含全部可辨花材至少5种。`;
 
-let b64=null,mime="image/jpeg",imgUrl=null;
-let boardW=800,boardH=720;
-const CARD_W=180;
+let b64=null,mime='image/jpeg',imgUrl=null,imgDataUrl=null;
+const BOARD_H=760,CARD_W=188;
+let photoDiameter=220;
+const cards=[];// track all cards for line drawing
 
-// ── Key ──
 window.addEventListener('DOMContentLoaded',()=>{
   try{const k=localStorage.getItem('or_key');
     if(k)document.getElementById('keyInput').value=k;
@@ -237,42 +264,45 @@ window.addEventListener('DOMContentLoaded',()=>{
 });
 function openModal(){document.getElementById('ov').classList.add('open')}
 function closeModal(){document.getElementById('ov').classList.remove('open')}
-document.getElementById('ov').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===document.getElementById('ov'))closeModal()});
 function saveKey(){
   const v=document.getElementById('keyInput').value.trim();
-  if(!v){toast('请先输入 API Key');return;}
+  if(!v){toast('请先输入 Key');return;}
   try{localStorage.setItem('or_key',v);}catch(e){}
   closeModal();toast('✅ Key 已保存');
 }
 function getKey(){try{return localStorage.getItem('or_key')||'';}catch(e){return '';}}
-function toast(msg){
-  const t=document.createElement('div');t.className='toast';t.textContent=msg;
-  document.body.appendChild(t);setTimeout(()=>t.remove(),2800);
-}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2800);}
 
-// ── Upload ──
+// Upload
 document.getElementById('fi').addEventListener('change',e=>{if(e.target.files[0])loadFile(e.target.files[0])});
 const dzEl=document.getElementById('dz');
 dzEl.addEventListener('dragover',e=>{e.preventDefault();dzEl.style.borderColor='var(--g1)'});
 dzEl.addEventListener('dragleave',()=>{dzEl.style.borderColor='var(--g3)'});
 dzEl.addEventListener('drop',e=>{e.preventDefault();dzEl.style.borderColor='var(--g3)';if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0])});
+
 function loadFile(file){
   if(!file.type.startsWith('image/')){toast('请选择图片文件');return;}
-  mime=file.type;imgUrl=URL.createObjectURL(file);
-  dzEl.innerHTML=`<img src="${imgUrl}" alt="花艺作品"/>`;
-  dzEl.classList.add('has-img');
-  document.getElementById('abtn').style.display='block';
-  document.getElementById('rw').innerHTML='';
-  document.getElementById('errmsg').textContent='';
-  const r=new FileReader();r.onload=e=>{b64=e.target.result.split(',')[1];};r.readAsDataURL(file);
+  mime=file.type;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    imgDataUrl=ev.target.result; // keep full dataURL for canvas embed
+    b64=imgDataUrl.split(',')[1];
+    imgUrl=URL.createObjectURL(file);
+    dzEl.innerHTML=`<img src="${imgUrl}" alt="花艺作品"/>`;
+    dzEl.classList.add('has-img');
+    document.getElementById('abtn').style.display='block';
+    document.getElementById('rw').innerHTML='';
+    document.getElementById('errmsg').textContent='';
+  };
+  reader.readAsDataURL(file);
 }
 
-// ── Analyze ──
 async function analyze(){
   const key=getKey();if(!key){openModal();return;}
   if(!b64){toast('请先选择图片');return;}
   const btn=document.getElementById('abtn');
-  btn.disabled=true;btn.innerHTML='<span class="sp"></span>AI 深度识别中，请稍候...';
+  btn.disabled=true;btn.innerHTML='<span class="sp"></span>AI 深度识别中...';
   document.getElementById('errmsg').textContent='';
   try{
     const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
@@ -290,7 +320,7 @@ async function analyze(){
     const clean=raw.replace(/```json|```/g,'').trim();
     let parsed;
     try{parsed=JSON.parse(clean);}
-    catch(je){
+    catch{
       let fx=clean;
       const ob=(fx.match(/\{/g)||[]).length,cb=(fx.match(/\}/g)||[]).length;
       const ol=(fx.match(/\[/g)||[]).length,cl=(fx.match(/\]/g)||[]).length;
@@ -303,315 +333,361 @@ async function analyze(){
   }finally{btn.disabled=false;btn.innerHTML='✨ 重新分析';}
 }
 
-// ════════════════════════════════════
-// RENDER INFOGRAPHIC
-// ════════════════════════════════════
-function E(tag,cls,html){
-  const el=document.createElement(tag);
-  if(cls)el.className=cls;
-  if(html!==undefined)el.innerHTML=html;
-  return el;
-}
+// ═══════════════════════════════════
+// INFOGRAPHIC
+// ═══════════════════════════════════
+function E(tag,cls,html){const el=document.createElement(tag);if(cls)el.className=cls;if(html!==undefined)el.innerHTML=html;return el;}
 function ed(el){el.contentEditable='true';return el;}
+
+// Convert dataURL image to canvas-safe data URL (avoid CORS)
+function embedImg(src,w,h){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      const c=document.createElement('canvas');c.width=w;c.height=h;
+      const ctx=c.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      resolve(c.toDataURL('image/jpeg',0.92));
+    };
+    img.onerror=()=>resolve(null);
+    img.src=src;
+  });
+}
 
 function renderIG(r){
   const wrap=document.getElementById('rw');
   wrap.innerHTML='';
+  cards.length=0;
 
   const outer=E('div','ig-outer');
 
-  // ── Header ──
+  // Header
   const hdr=E('div','ig-hdr');
   hdr.append(
-    ed(E('div','ig-maintitle',r.title||'')),
     (() => {
-      const w=E('div','ig-intro-wrap');
-      w.append(E('div','ig-intro-lbl','作 品 介 绍'),ed(E('div','ig-intro-text',r.introduction||'')));
-      return w;
+      const tw=E('div','ig-title-wrap');
+      tw.innerHTML='<span class="ig-title-deco">❧</span>';
+      const t=ed(E('div','ig-maintitle',r.title||''));
+      tw.append(t,Object.assign(E('span','ig-title-deco'),{innerHTML:'❧'}));
+      return tw;
+    })(),
+    ed(E('div','ig-subtitle',r.subtitle||'')),
+    (() => {
+      const b=E('div','ig-intro-box');
+      b.append(E('div','ig-intro-lbl','作 品 介 绍'),ed(E('div','ig-intro-text',r.introduction||'')));
+      return b;
     })()
   );
   outer.appendChild(hdr);
 
-  // ── Board ──
+  // Board
   const board=E('div','ig-board');
-  boardW=Math.max(wrap.offsetWidth||800,680);
-  boardH=740;
-  board.style.height=boardH+'px';
+  const boardW=wrap.clientWidth||860;
+  board.style.height=BOARD_H+'px';
 
-  // Dot bg
-  board.appendChild(E('div','board-bg'));
+  // BG
+  board.appendChild(E('div','board-bg-pattern'));
+  // Decorative large faded circles
+  const dc1=E('div','board-deco-circle');
+  dc1.style.cssText=`width:500px;height:500px;left:${boardW/2-250}px;top:${BOARD_H/2-250}px;
+    border:1px solid rgba(140,190,128,0.12);`;
+  const dc2=E('div','board-deco-circle');
+  dc2.style.cssText=`width:340px;height:340px;left:${boardW/2-170}px;top:${BOARD_H/2-170}px;
+    border:1px dashed rgba(140,190,128,0.18);`;
+  board.append(dc1,dc2);
 
-  // SVG lines
+  // SVG
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
   svg.setAttribute('class','lines-svg');
-  svg.setAttribute('viewBox',`0 0 ${boardW} ${boardH}`);
+  svg.setAttribute('viewBox',`0 0 ${boardW} ${BOARD_H}`);
   board.appendChild(svg);
 
   // Center photo
-  const cx=boardW/2, cy=boardH/2-20;
-  const photoEl=E('div','center-photo');
-  photoEl.style.left=cx+'px';photoEl.style.top=cy+'px';
-  const outerRing=E('div','photo-outer');
-  const midRing=E('div','photo-mid');
-  midRing.innerHTML=`<img src="${imgUrl}" alt="花艺"/>`;
-  outerRing.appendChild(midRing);
+  const cx=boardW/2, cy=BOARD_H/2-10;
+  photoDiameter=220;
+  const cWrap=E('div','center-wrap');
+  cWrap.style.left=cx+'px';cWrap.style.top=cy+'px';
+
+  const resizer=E('div','photo-resizer');
+  const outerRing=E('div','photo-outer-ring');
+  const innerRing=E('div','photo-inner-ring');
+  // Use data URL so html2canvas can render it
+  const photoImg=document.createElement('img');
+  photoImg.src=imgDataUrl; // data URL - no CORS issue!
+  photoImg.alt='花艺作品';
+  innerRing.appendChild(photoImg);
+  outerRing.appendChild(innerRing);
+
+  function applyPhotoSize(d){
+    photoDiameter=d;
+    outerRing.style.cssText=`width:${d+16}px;height:${d+16}px`;
+    innerRing.style.cssText=`width:${d}px;height:${d}px`;
+  }
+  applyPhotoSize(photoDiameter);
+
+  const handle=E('div','resize-handle','⤡');
+  handle.title='拖拽调整大小';
+  makeSizeHandle(handle,resizer,applyPhotoSize,()=>drawLines(svg,board,cx,cy));
+
+  resizer.append(outerRing,handle);
+  cWrap.appendChild(resizer);
+
   // Palette
-  const palRow=E('div','palette-row');
+  const palSec=E('div','pal-section');
+  palSec.append(Object.assign(E('div','pal-lbl'),{textContent:'色 彩 提 取'}));
+  const palRow=E('div','pal-row');
   (r.colorScheme?.colors||[]).forEach(c=>{
-    const d=E('div','p-dot');d.style.background=c;palRow.appendChild(d);
+    const d=E('div','pdot');d.style.background=c;palRow.appendChild(d);
   });
-  const palWrap=E('div');
-  palWrap.style.cssText='text-align:center';
-  palWrap.append(Object.assign(E('div'),{style:'font-size:9px;color:var(--lt);letter-spacing:0.14em;font-weight:700;margin-bottom:5px',textContent:'色 彩 提 取'}),palRow);
-  photoEl.append(outerRing,palWrap);
-  board.appendChild(photoEl);
+  palSec.appendChild(palRow);
+  cWrap.appendChild(palSec);
+  board.appendChild(cWrap);
 
   // Section labels
   const lblL=E('div','sec-lbl','🌺 花材成分识别');
-  lblL.style.cssText=`left:${cx-330}px;top:30px`;
-  board.appendChild(lblL);
   const lblR=E('div','sec-lbl','🎨 设计美学解析');
-  lblR.style.cssText=`left:${cx+118}px;top:30px`;
-  board.appendChild(lblR);
+  lblL.style.cssText=`left:20px;top:22px`;
+  lblR.style.cssText=`right:20px;top:22px`;
+  board.append(lblL,lblR);
 
-  // ── Place cards ──
+  // Position cards
   const flowers=r.flowers||[];
   const aes=[
-    {icon:'🌿',d:r.style},
+    {icon:'🌿',d:r.style,colors:null},
     {icon:'🎨',d:r.colorScheme,colors:r.colorScheme?.colors},
-    {icon:'🏺',d:r.vase},
-    {icon:'✦',d:r.composition},
-  ];
+    {icon:'🏺',d:r.vase,colors:null},
+    {icon:'✦',d:r.composition,colors:null},
+  ].filter(x=>x.d);
 
-  const cardPositions=[];
+  const cardEstH=110;
+  const gap=14;
 
-  // Left side: flower cards
-  const leftTotal=flowers.length;
-  const cardH=100;
-  const leftStartY=cy - (leftTotal*(cardH+12))/2 + 30;
+  // Left: flower cards
+  const leftTotalH=flowers.length*(cardEstH+gap)-gap;
+  let ly=cy-leftTotalH/2;
   flowers.forEach((f,i)=>{
-    const x=cx-CARD_W-160;
-    const y=leftStartY+i*(cardH+12);
+    const lx=cx-CARD_W-175;
     const card=makeFlowerCard(f);
-    card.style.left=x+'px';card.style.top=y+'px';
+    card.style.left=lx+'px';card.style.top=ly+'px';
     board.appendChild(card);
-    cardPositions.push({el:card,side:'left'});
-    makeDraggable(card,board,svg,cx,cy,cardPositions);
+    cards.push(card);
+    makeDraggable(card,board,svg,cx,cy);
+    ly+=cardEstH+gap;
   });
 
-  // Right side: aesthetic cards
-  const rightTotal=aes.length;
-  const rightStartY=cy - (rightTotal*(cardH+12))/2 + 30;
-  aes.forEach(({icon,d,colors},i)=>{
-    if(!d)return;
-    const x=cx+160;
-    const y=rightStartY+i*(cardH+12);
+  // Right: aesthetic cards
+  const rightTotalH=aes.length*(cardEstH+gap)-gap;
+  let ry=cy-rightTotalH/2;
+  aes.forEach(({icon,d,colors})=>{
+    const rx=cx+175;
     const card=makeAesCard(icon,d,colors);
-    card.style.left=x+'px';card.style.top=y+'px';
+    card.style.left=rx+'px';card.style.top=ry+'px';
     board.appendChild(card);
-    cardPositions.push({el:card,side:'right'});
-    makeDraggable(card,board,svg,cx,cy,cardPositions);
+    cards.push(card);
+    makeDraggable(card,board,svg,cx,cy);
+    ry+=cardEstH+gap;
   });
-
-  board.appendChild(svg); // re-append svg to keep on top of bg but below cards
 
   outer.appendChild(board);
 
-  // ── Footer ──
+  // Footer
   const foot=E('div','ig-foot');
   const hint=E('div','foot-hint');
-  hint.innerHTML='<span>✏️ 点击文字可编辑</span><span>✋ 拖拽卡片可移动</span><span>✕ 悬停卡片右上角可删除</span>';
+  hint.innerHTML='<span>✏️ 点击文字编辑</span><span>✋ 拖拽卡片移位</span><span>↔️ 拖角调整中心图大小</span>';
   const btns=E('div','foot-btns');
-  const reBtn=E('button','re-btn','↺ 重新分析');
-  reBtn.onclick=()=>document.getElementById('abtn').click();
+  const reBtn=E('button','re-btn','↺ 重新分析');reBtn.onclick=()=>document.getElementById('abtn').click();
   const addBtn=E('button','add-btn','＋ 添加花材');
   addBtn.onclick=()=>{
     const card=makeFlowerCard(null);
-    const x=cx-CARD_W-100;const y=cy-50;
-    card.style.left=x+'px';card.style.top=y+'px';
-    board.insertBefore(card,foot);
-    cardPositions.push({el:card,side:'left'});
-    makeDraggable(card,board,svg,cx,cy,cardPositions);
-    drawAllLines(svg,board,cx,cy,cardPositions);
+    card.style.left=(cx-CARD_W-100)+'px';card.style.top=(cy-55)+'px';
+    board.appendChild(card);cards.push(card);
+    makeDraggable(card,board,svg,cx,cy);
+    drawLines(svg,board,cx,cy);
   };
-  const dlBtn=E('button','dl-btn','📥 下载高清分析图');
-  dlBtn.onclick=()=>dlImage(outer,foot,board,svg,cx,cy,cardPositions);
+  const dlBtn=E('button','dl-btn','📥 下载高清图');
+  dlBtn.onclick=()=>dlImage(outer,foot,board,svg,cx,cy);
   btns.append(reBtn,addBtn,dlBtn);
   foot.append(hint,btns);
   outer.appendChild(foot);
 
   wrap.appendChild(outer);
-
-  // Draw lines after layout
   setTimeout(()=>{
-    boardW=board.offsetWidth||boardW;
-    svg.setAttribute('viewBox',`0 0 ${boardW} ${boardH}`);
-    drawAllLines(svg,board,cx,cy,cardPositions);
+    drawLines(svg,board,cx,cy);
     outer.scrollIntoView({behavior:'smooth',block:'start'});
-  },150);
+  },200);
 }
 
 // ── Flower card ──
 function makeFlowerCard(f){
   const card=E('div','dcard flower');
-  card.innerHTML='<div class="dcard-drag-handle"></div>';
+  const inner=E('div','dcard-inner');
+  inner.appendChild(E('div','dcard-drag-bar'));
   const del=E('button','dcard-del','✕');
   del.onmousedown=e=>e.stopPropagation();
-  del.onclick=e=>{e.stopPropagation();card.remove();};
-  card.appendChild(del);
-  const row=E('div');row.style.cssText='display:flex;gap:9px;align-items:flex-start;margin-top:6px';
-  // photo
+  del.onclick=e=>{e.stopPropagation();card.remove();const i=cards.indexOf(card);if(i>-1)cards.splice(i,1);};
+  inner.appendChild(del);
+
+  const row=E('div','fc-row');
   const photo=E('div','fc-photo');
-  if(f&&f.searchName){
-    const img=new Image();img.crossOrigin='anonymous';
-    img.onload=()=>{photo.innerHTML='';img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:8px';photo.appendChild(img);};
-    img.onerror=()=>{photo.textContent=f.emoji||'🌸';};
-    photo.textContent='···';
-    img.src=`https://source.unsplash.com/80x80/?${encodeURIComponent(f.searchName+' flower')}`;
-  } else { photo.textContent=f?f.emoji||'🌸':'🌸'; }
-  const body=E('div');body.style.flex='1';
+
+  // Use emoji as the visual identifier (no external images = no CORS)
+  const emojiEl=E('div','fc-photo-emoji',f?f.emoji||'🌸':'🌸');
+  photo.appendChild(emojiEl);
+  // Add colored background from flower's color
+  if(f&&f.color){photo.style.background=f.color+'22';}
+
+  const body=E('div','fc-body');
   body.append(
-    ed(E('div','fc-role',f?f.role||'':'花材角色')),
+    E('div','fc-role',f?f.role||'':'花材角色'),
     ed(E('div','fc-name',f?f.name||'':'花材名称')),
     ed(E('div','fc-desc',f?f.description||'':'点击编辑描述'))
   );
-  row.append(photo,body);card.appendChild(row);
+  row.append(photo,body);inner.appendChild(row);
+  card.appendChild(inner);
   return card;
 }
 
 // ── Aesthetic card ──
 function makeAesCard(icon,d,colors){
   const card=E('div','dcard aes');
-  card.innerHTML='<div class="dcard-drag-handle"></div>';
+  const inner=E('div','dcard-inner');
+  inner.appendChild(E('div','dcard-drag-bar'));
   const del=E('button','dcard-del','✕');
   del.onmousedown=e=>e.stopPropagation();
-  del.onclick=e=>{e.stopPropagation();card.remove();};
-  card.appendChild(del);
-  const body=E('div');body.style.marginTop='6px';
-  body.append(
-    E('span','ac-icon',icon),
-    ed(E('div','ac-title',d.title||'')),
-    ed(E('div','ac-desc',d.description||''))
-  );
+  del.onclick=e=>{e.stopPropagation();card.remove();const i=cards.indexOf(card);if(i>-1)cards.splice(i,1);};
+  inner.appendChild(del);
+
+  const head=E('div','ac-head');
+  const ic=E('div','ac-icon-circle',icon);
+  head.append(ic,ed(E('div','ac-title',d.title||'')));
+  inner.append(head,ed(E('div','ac-desc',d.description||'')));
+
   if(colors&&colors.length){
     const sw=E('div','ac-swatches');
     colors.forEach(c=>{const s=E('div','ac-sw');s.style.background=c;sw.appendChild(s);});
-    body.appendChild(sw);
+    inner.appendChild(sw);
   }
-  card.appendChild(body);
+  card.appendChild(inner);
   return card;
 }
 
-// ── Drag logic ──
-function makeDraggable(card,board,svg,cx,cy,cardPositions){
-  let startX,startY,origLeft,origTop,dragging=false;
-  card.addEventListener('mousedown',onStart);
-  card.addEventListener('touchstart',onStart,{passive:true});
-
-  function onStart(e){
-    if(e.target.closest('[contenteditable]')||e.target.closest('.dcard-del'))return;
-    dragging=true;
-    const boardRect=board.getBoundingClientRect();
+// ── Resize handle for center photo ──
+function makeSizeHandle(handle,resizer,onResize,onDone){
+  let startX,startY,startD;
+  handle.addEventListener('mousedown',start);
+  handle.addEventListener('touchstart',start,{passive:false});
+  function start(e){
+    e.stopPropagation();e.preventDefault();
     const pt=e.touches?e.touches[0]:e;
-    startX=pt.clientX;startY=pt.clientY;
-    origLeft=parseInt(card.style.left)||0;
-    origTop=parseInt(card.style.top)||0;
-    card.style.transition='none';
-    e.preventDefault&&e.preventDefault();
+    startX=pt.clientX;startY=pt.clientY;startD=photoDiameter;
+    document.addEventListener('mousemove',move);document.addEventListener('mouseup',end);
+    document.addEventListener('touchmove',move,{passive:false});document.addEventListener('touchend',end);
   }
-  function onMove(e){
-    if(!dragging)return;
+  function move(e){
+    e.preventDefault&&e.preventDefault();
     const pt=e.touches?e.touches[0]:e;
     const dx=pt.clientX-startX,dy=pt.clientY-startY;
-    card.style.left=(origLeft+dx)+'px';
-    card.style.top=(origTop+dy)+'px';
-    drawAllLines(svg,board,cx,cy,cardPositions);
+    const delta=Math.max(dx,dy);
+    const newD=Math.min(340,Math.max(120,startD+delta));
+    onResize(newD);onDone();
   }
-  function onEnd(){
-    if(!dragging)return;
-    dragging=false;
-    card.style.transition='';
-    drawAllLines(svg,board,cx,cy,cardPositions);
+  function end(){
+    document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',end);
+    document.removeEventListener('touchmove',move);document.removeEventListener('touchend',end);
+    onDone();
   }
-  document.addEventListener('mousemove',onMove);
-  document.addEventListener('mouseup',onEnd);
-  document.addEventListener('touchmove',onMove,{passive:true});
-  document.addEventListener('touchend',onEnd);
 }
 
-// ── Draw lines ──
-function drawAllLines(svg,board,cx,cy,cardPositions){
-  svg.innerHTML='';
-  const boardRect=board.getBoundingClientRect();
-  const photoEl=board.querySelector('.center-photo');
-  if(!photoEl)return;
-  const pRect=photoEl.getBoundingClientRect();
-  const pcx=pRect.left+pRect.width/2-boardRect.left;
-  const pcy=pRect.top+pRect.height*0.42-boardRect.top; // center of circle
+// ── Drag cards ──
+function makeDraggable(card,board,svg,cx,cy){
+  let sx,sy,ox,oy,dragging=false;
+  card.addEventListener('mousedown',onS);card.addEventListener('touchstart',onS,{passive:false});
+  function onS(e){
+    if(e.target.closest('[contenteditable]')||e.target.closest('.dcard-del'))return;
+    e.preventDefault();dragging=true;
+    const pt=e.touches?e.touches[0]:e;
+    sx=pt.clientX;sy=pt.clientY;
+    ox=parseInt(card.style.left)||0;oy=parseInt(card.style.top)||0;
+    card.style.transition='none';
+  }
+  function onM(e){
+    if(!dragging)return;
+    const pt=e.touches?e.touches[0]:e;
+    card.style.left=(ox+pt.clientX-sx)+'px';card.style.top=(oy+pt.clientY-sy)+'px';
+    drawLines(svg,board,cx,cy);
+  }
+  function onE(){if(!dragging)return;dragging=false;card.style.transition='';}
+  document.addEventListener('mousemove',onM);document.addEventListener('mouseup',onE);
+  document.addEventListener('touchmove',onM,{passive:true});document.addEventListener('touchend',onE);
+}
 
-  const allCards=[...board.querySelectorAll('.dcard')];
-  allCards.forEach(card=>{
-    const r=card.getBoundingClientRect();
-    const cardCx=r.left+r.width/2-boardRect.left;
-    const cardCy=r.top+r.height/2-boardRect.top;
-    // Determine attach point: left or right edge toward center
-    const attachX=cardCx<pcx?r.right-boardRect.left:r.left-boardRect.left;
-    const attachY=cardCy;
-    drawConnector(svg,attachX,attachY,pcx,pcy);
+// ── Draw connector lines ──
+function drawLines(svg,board,cx,cy){
+  svg.innerHTML='';
+  const bRect=board.getBoundingClientRect();
+  const cWrap=board.querySelector('.center-wrap');
+  if(!cWrap)return;
+  const cRect=cWrap.getBoundingClientRect();
+  const pcx=cRect.left+cRect.width/2-bRect.left;
+  const pcy=cRect.top+(photoDiameter/2+8)-bRect.top;
+  const r=photoDiameter/2;
+
+  board.querySelectorAll('.dcard').forEach(card=>{
+    const cr=card.getBoundingClientRect();
+    const cardCx=cr.left+cr.width/2-bRect.left;
+    const cardCy=cr.top+cr.height/2-bRect.top;
+    // Attach from left or right edge of card
+    const ax=cardCx<pcx?cr.right-bRect.left:cr.left-bRect.left;
+    const ay=cardCy;
+    // Point on circle edge
+    const angle=Math.atan2(ay-pcy,ax-pcx);
+    const ex=pcx+Math.cos(angle)*(r+6);
+    const ey=pcy+Math.sin(angle)*(r+6);
+    // Bezier curve
+    const mx=(ax+ex)/2,my=(ay+ey)/2;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M${ax},${ay} Q${mx},${my} ${ex},${ey}`);
+    path.setAttribute('stroke','rgba(90,142,82,0.36)');
+    path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-dasharray','5,4');
+    path.setAttribute('fill','none');
+    svg.appendChild(path);
+    // Dots
+    dot(svg,ax,ay,'rgba(80,135,72,0.5)',3.5);
+    dot(svg,ex,ey,'rgba(80,135,72,0.4)',2.8);
   });
 }
-
-function drawConnector(svg,x1,y1,x2,y2){
-  // Dashed line
-  const line=document.createElementNS('http://www.w3.org/2000/svg','line');
-  line.setAttribute('x1',x1);line.setAttribute('y1',y1);
-  line.setAttribute('x2',x2);line.setAttribute('y2',y2);
-  line.setAttribute('stroke','rgba(100,155,88,0.38)');
-  line.setAttribute('stroke-width','1.4');
-  line.setAttribute('stroke-dasharray','5,4');
-  svg.appendChild(line);
-  // Dot at card end
-  addDot(svg,x1,y1,'rgba(90,148,80,0.55)',3.5);
-  // Dot at center
-  addDot(svg,x2,y2,'rgba(90,148,80,0.4)',2.5);
-}
-function addDot(svg,x,y,fill,r){
+function dot(svg,x,y,fill,r){
   const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
   c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',r);
   c.setAttribute('fill',fill);svg.appendChild(c);
 }
 
-// ── Download ──
-async function dlImage(outer,foot,board,svg,cx,cy,cardPositions){
+// ── Download (no external images = clean render) ──
+async function dlImage(outer,foot,board,svg,cx,cy){
   const dlBtn=foot.querySelector('.dl-btn');
   dlBtn.disabled=true;dlBtn.textContent='生成中...';
-
-  // Hide UI-only elements
   foot.style.display='none';
-  const dels=outer.querySelectorAll('.dcard-del');
-  dels.forEach(d=>d.style.display='none');
-  const handles=outer.querySelectorAll('.dcard-drag-handle');
-  handles.forEach(d=>d.style.display='none');
 
-  // Freeze editable
+  // Hide UI controls
+  const dels=outer.querySelectorAll('.dcard-del,.dcard-drag-bar,.resize-handle');
+  dels.forEach(d=>d.style.visibility='hidden');
   const eds=outer.querySelectorAll('[contenteditable]');
   eds.forEach(e=>{e.removeAttribute('contenteditable');
     e.style.background='none';e.style.boxShadow='none';e.style.padding='0';});
 
   // Redraw lines
-  drawAllLines(svg,board,cx,cy,cardPositions);
+  drawLines(svg,board,cx,cy);
   await new Promise(r=>setTimeout(r,300));
-
-  // Wait for images
-  const imgs=[...outer.querySelectorAll('img')];
-  await Promise.allSettled(imgs.map(img=>img.complete?Promise.resolve():
-    new Promise(res=>{img.onload=res;img.onerror=res;})));
-  await new Promise(r=>setTimeout(r,400));
 
   try{
     const c=await html2canvas(outer,{
-      scale:3,useCORS:true,allowTaint:true,
-      backgroundColor:'#faf8f0',logging:false,imageTimeout:12000
+      scale:3,
+      useCORS:false,   // false because we use data URLs, no CORS needed
+      allowTaint:true,
+      backgroundColor:'#faf6ec',
+      logging:false,
+      imageTimeout:0   // no timeout - data URLs are instant
     });
     const a=document.createElement('a');
     a.download='花艺智析_'+Date.now()+'.png';
@@ -620,15 +696,11 @@ async function dlImage(outer,foot,board,svg,cx,cy,cardPositions){
   }catch(e){toast('下载失败：'+e.message);}
   finally{
     foot.style.display='flex';
-    dels.forEach(d=>d.style.display='');
-    handles.forEach(d=>d.style.display='');
+    dels.forEach(d=>d.style.visibility='');
     eds.forEach(e=>e.contentEditable='true');
-    dlBtn.disabled=false;dlBtn.textContent='📥 下载高清分析图';
+    dlBtn.disabled=false;dlBtn.textContent='📥 下载高清图';
   }
 }
 </script>
-
-<!-- html2canvas -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
