@@ -3,206 +3,159 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>花艺智析</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --g1:#3d6e42;--g2:#6aaa6e;--g3:#b8d8b4;--g4:#e6f4e2;--g5:#f0f8ee;
-  --cream:#f6f1e7;--cream2:#faf7f0;--dark:#1e2e1e;--mid:#5a6a58;--lt:#98aa90;
-}
+:root{--g1:#3d6e42;--g2:#6aaa6e;--g3:#b8d8b4;--g4:#e6f4e2;--cream:#f5f0e6;--cream2:#faf7ee;--dark:#1e2e1e;--mid:#5a6a58;--lt:#98aa90}
 body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-height:100vh}
 
 /* MODAL */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:2000;
-  display:none;align-items:center;justify-content:center;padding:20px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
 .ov.open{display:flex}
-.modal{background:#fff;border-radius:22px;padding:30px 26px;width:100%;max-width:420px;
-  box-shadow:0 24px 64px rgba(0,0,0,0.22)}
-.modal h3{font-size:18px;color:var(--dark);margin-bottom:7px;font-weight:900}
-.modal p{font-size:12px;color:#9aaa90;margin-bottom:18px;line-height:1.8}
-.modal input{width:100%;padding:13px 15px;border:2px solid var(--g3);border-radius:12px;
-  font-size:14px;font-family:inherit;background:var(--g4);color:var(--dark);
-  outline:none;margin-bottom:13px}
+.modal{background:#fff;border-radius:22px;padding:28px 24px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.modal h3{font-size:17px;color:var(--dark);margin-bottom:6px;font-weight:900}
+.modal p{font-size:12px;color:#9aaa90;margin-bottom:16px;line-height:1.8}
+.modal input{width:100%;padding:12px 14px;border:2px solid var(--g3);border-radius:12px;font-size:14px;font-family:inherit;background:var(--g4);color:var(--dark);outline:none;margin-bottom:12px}
 .modal input:focus{border-color:var(--g1)}
-.mbtn{width:100%;padding:14px;background:linear-gradient(135deg,var(--g2),var(--g1));
-  color:#fff;border:none;border-radius:13px;font-size:15px;font-weight:800;
-  cursor:pointer;font-family:inherit;letter-spacing:0.06em}
-.mx{float:right;background:none;border:none;font-size:26px;cursor:pointer;color:#ccc;line-height:1;margin-top:-4px}
+.mbtn{width:100%;padding:13px;background:linear-gradient(135deg,var(--g2),var(--g1));color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}
+.mx{float:right;background:none;border:none;font-size:24px;cursor:pointer;color:#ccc;line-height:1}
 
 /* HEADER */
-.hdr{text-align:center;padding:34px 20px 18px;position:relative;
-  background:linear-gradient(180deg,rgba(224,240,220,0.7) 0%,transparent 100%)}
-.gear{position:absolute;right:20px;top:34px;width:44px;height:44px;border-radius:50%;
-  background:rgba(255,255,255,0.92);border:1.5px solid var(--g3);
-  font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 12px rgba(0,0,0,0.09);touch-action:manipulation}
-.hdr h1{font-size:31px;font-weight:900;color:var(--dark);letter-spacing:0.13em;margin:8px 0 5px}
-.hdr p{font-size:13px;color:var(--lt);letter-spacing:0.07em}
+.hdr{text-align:center;padding:30px 20px 16px;position:relative;background:linear-gradient(180deg,rgba(224,240,220,0.7) 0%,transparent 100%)}
+.gear{position:absolute;right:18px;top:30px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.92);border:1.5px solid var(--g3);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.09);touch-action:manipulation}
+.hdr h1{font-size:30px;font-weight:900;color:var(--dark);letter-spacing:0.12em;margin:6px 0 5px}
+.hdr p{font-size:12px;color:var(--lt);letter-spacing:0.06em}
 
 /* UPLOAD */
-.wrap{max-width:840px;margin:0 auto;padding:0 16px 80px}
-.ucard{background:rgba(255,255,255,0.9);border-radius:24px;padding:22px;
-  margin-bottom:22px;box-shadow:0 6px 32px rgba(70,120,60,0.1);
-  border:1px solid rgba(140,170,120,0.2)}
-
-/* Drop zone - beautiful upgrade */
-.dz{position:relative;border-radius:20px;overflow:hidden;margin-bottom:16px;
-  background:linear-gradient(135deg,#e8f4e4,#f0f8ec);
-  border:2px dashed var(--g3);min-height:260px;
-  display:flex;align-items:center;justify-content:center;
-  transition:all 0.35s;cursor:pointer}
-.dz::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 30% 40%,rgba(140,200,130,0.15) 0%,transparent 60%),
-  radial-gradient(ellipse at 70% 70%,rgba(180,220,160,0.1) 0%,transparent 60%);
-  pointer-events:none}
-.dz.filled{background:#fff;border-style:solid;border-color:var(--g3);min-height:340px;cursor:default}
-.dz.filled::before{display:none}
-.dz img{width:100%;max-height:420px;object-fit:contain;border-radius:14px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.1);display:block}
-.dz-img-wrap{padding:12px;width:100%}
-.ph{text-align:center;padding:44px 24px;position:relative;z-index:1}
-.ph-icon{font-size:60px;display:block;margin-bottom:14px;
-  filter:drop-shadow(0 4px 12px rgba(80,140,70,0.22))}
-.ph-t{font-size:16px;color:var(--dark);font-weight:700;margin-bottom:5px}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 80px}
+.ucard{background:rgba(255,255,255,0.9);border-radius:22px;padding:20px;margin-bottom:20px;box-shadow:0 4px 28px rgba(70,120,60,0.1);border:1px solid rgba(140,170,120,0.2)}
+.dz{position:relative;border-radius:18px;overflow:hidden;margin-bottom:14px;background:linear-gradient(135deg,#eaf4e6,#f2f8ee);border:2px dashed var(--g3);min-height:240px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;cursor:pointer}
+.dz.filled{background:#fff;border-style:solid;min-height:320px;cursor:default}
+.dz img{width:100%;max-height:400px;object-fit:contain;border-radius:12px;padding:10px;display:block;box-shadow:0 6px 24px rgba(0,0,0,0.08)}
+.ph{text-align:center;padding:40px 20px}
+.ph-i{font-size:56px;display:block;margin-bottom:12px;filter:drop-shadow(0 3px 8px rgba(80,140,70,0.2))}
+.ph-t{font-size:15px;color:var(--dark);font-weight:700;margin-bottom:4px}
 .ph-s{font-size:12px;color:var(--lt)}
-.dz-badge{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.85);
-  border:1px solid var(--g3);border-radius:20px;padding:4px 12px;
-  font-size:11px;color:var(--g1);font-weight:700;display:none}
-.dz.filled .dz-badge{display:block}
-.dz-corner{position:absolute;width:20px;height:20px;border-color:var(--g2);border-style:solid;}
-.dz-corner.tl{top:10px;left:10px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
-.dz-corner.tr{top:10px;right:10px;border-width:2px 2px 0 0;border-radius:0 4px 0 0}
-.dz-corner.bl{bottom:10px;left:10px;border-width:0 0 2px 2px;border-radius:0 0 0 4px}
-.dz-corner.br{bottom:10px;right:10px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
-
-.ulbl{display:block;width:100%;padding:15px;text-align:center;
-  background:linear-gradient(135deg,#7aba74,var(--g1));color:#fff;
-  border-radius:13px;font-size:15px;font-weight:800;cursor:pointer;
-  margin-bottom:10px;box-shadow:0 5px 18px rgba(60,110,55,0.28);
-  letter-spacing:0.07em;touch-action:manipulation}
-.abtn{display:none;width:100%;padding:15px;
-  background:linear-gradient(135deg,#4e8450,#2e5e32);color:#fff;
-  border:none;border-radius:13px;font-size:15px;font-weight:800;
-  cursor:pointer;font-family:inherit;letter-spacing:0.07em;
-  box-shadow:0 5px 18px rgba(60,110,55,0.28);touch-action:manipulation}
+.ulbl{display:block;width:100%;padding:14px;text-align:center;background:linear-gradient(135deg,#7aba74,var(--g1));color:#fff;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:10px;box-shadow:0 4px 16px rgba(60,110,55,0.28);letter-spacing:0.06em;touch-action:manipulation}
+.abtn{display:none;width:100%;padding:14px;background:linear-gradient(135deg,#4e8450,#2e5e32);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.06em;box-shadow:0 4px 16px rgba(60,110,55,0.28);touch-action:manipulation}
 .abtn:disabled{opacity:0.65}
 .errmsg{color:#b03030;text-align:center;font-size:13px;margin-top:10px;line-height:1.5}
 @keyframes spin{to{transform:rotate(360deg)}}
-.sp{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);
-  border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;
-  display:inline-block;vertical-align:middle;margin-right:8px}
+.sp{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
 
-/* ═══ INFOGRAPHIC ═══ */
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.infog{background:var(--cream2);border-radius:26px;overflow:hidden;
-  box-shadow:0 12px 56px rgba(60,100,55,0.16);
-  animation:fadeUp 0.7s ease both;border:1.5px solid var(--g3)}
+/* ══════════ INFOGRAPHIC ══════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.infog{background:var(--cream2);border-radius:0;overflow:visible;animation:fadeUp 0.7s ease both}
 
-/* ── Title ── */
-.ig-top{background:linear-gradient(135deg,#f0f9ec 0%,#faf7ee 100%);
-  padding:30px 32px 24px;text-align:center;border-bottom:1.5px solid #d8eed0}
-.ig-sub{display:inline-block;font-size:10px;color:var(--g1);font-weight:800;
-  letter-spacing:0.22em;background:var(--g4);padding:4px 16px;
-  border-radius:20px;margin-bottom:12px;border:1px solid var(--g3);min-width:10px}
-.ig-title{font-size:26px;font-weight:900;color:var(--dark);
-  letter-spacing:0.1em;margin-bottom:10px;line-height:1.3;min-width:10px}
-.ig-desc-lbl{font-size:10px;color:var(--lt);letter-spacing:0.12em;
-  font-weight:700;margin-bottom:8px;text-transform:uppercase}
-.ig-desc{font-size:13px;color:var(--mid);line-height:2;
-  max-width:600px;margin:0 auto;text-align:left;min-width:10px}
+/* The printable canvas */
+.ig-canvas{background:var(--cream2);width:100%;position:relative;padding-bottom:30px;overflow:hidden}
 
-/* ── Center photo strip ── */
-.ig-photo{background:linear-gradient(180deg,#eef8e8,#e8f4e0);
-  border-top:1px solid #d8eed0;border-bottom:1px solid #d8eed0;
-  padding:24px 16px;display:flex;flex-direction:column;
-  align-items:center;gap:14px}
-.photo-frame{position:relative;width:190px;height:190px}
-.photo-ring{position:absolute;inset:-6px;border-radius:50%;
-  border:2px dashed rgba(100,160,90,0.35);pointer-events:none}
-.photo-ring2{position:absolute;inset:-12px;border-radius:50%;
-  border:1px dashed rgba(100,160,90,0.18);pointer-events:none}
-.photo-circle{width:190px;height:190px;border-radius:50%;overflow:hidden;
-  border:5px solid #b8d8b0;box-shadow:0 10px 36px rgba(50,90,45,0.25)}
-.photo-circle img{width:100%;height:100%;object-fit:cover}
-.pal-wrap{text-align:center}
-.pal-lbl{font-size:10px;color:var(--lt);letter-spacing:0.12em;font-weight:700;margin-bottom:7px}
-.pal{display:flex;gap:6px;justify-content:center}
-.pdot{width:24px;height:24px;border-radius:50%;
-  border:3px solid rgba(255,255,255,0.9);
-  box-shadow:0 3px 8px rgba(0,0,0,0.15)}
+/* TOP TITLE BLOCK */
+.ig-header{text-align:center;padding:32px 40px 24px;border-bottom:1px solid #ddeedd;background:linear-gradient(180deg,#f0f9ea,var(--cream2))}
+.ig-title{font-size:28px;font-weight:900;color:var(--dark);letter-spacing:0.12em;margin-bottom:10px;line-height:1.3}
+.ig-desc{font-size:12.5px;color:var(--mid);line-height:2;max-width:640px;margin:0 auto;text-align:left}
 
-/* ── Two columns ── */
-.ig-cols{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ddeedd}
-.ig-col{padding:22px 20px}
-.ig-col:first-child{border-right:1px solid #ddeedd}
-.col-title{font-size:13px;font-weight:900;color:var(--dark);
-  padding-bottom:10px;border-bottom:2.5px solid var(--g3);
-  margin-bottom:16px;letter-spacing:0.07em}
+/* INTRO TEXT BELOW TITLE */
+.ig-intro-row{padding:16px 40px;border-bottom:1px solid #e8f0e4;background:#f8faf4}
+.ig-intro-inner{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start;max-width:760px;margin:0 auto}
+.ig-intro-label{font-size:10px;font-weight:800;color:var(--g1);letter-spacing:0.15em;padding-top:3px}
+.ig-intro-text{font-size:12px;color:var(--mid);line-height:1.95}
 
-/* ── Flower card with photo ── */
-.fc{background:linear-gradient(135deg,rgba(224,242,220,0.95),rgba(244,240,228,0.7));
-  border-radius:14px;padding:12px 13px;margin-bottom:10px;
-  border:1px solid rgba(160,204,150,0.4);display:flex;gap:11px;align-items:flex-start}
-.fc-photo{width:46px;height:46px;border-radius:10px;overflow:hidden;flex-shrink:0;
+/* MAIN RADIAL LAYOUT */
+.ig-radial{position:relative;padding:40px 20px 40px;background:var(--cream2)}
+.ig-radial-inner{position:relative;max-width:800px;margin:0 auto;min-height:700px}
+
+/* CENTER CIRCLE */
+.center-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;z-index:10}
+.center-ring-outer{width:260px;height:260px;border-radius:50%;
+  border:1.5px solid rgba(100,160,90,0.25);
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,rgba(240,250,238,0.5),transparent)}
+.center-ring{width:240px;height:240px;border-radius:50%;overflow:hidden;
+  border:4px solid #c2d8bc;
+  box-shadow:0 8px 40px rgba(50,90,45,0.22),inset 0 0 0 1px rgba(255,255,255,0.5)}
+.center-ring img{width:100%;height:100%;object-fit:cover}
+.center-palette{margin-top:14px;text-align:center}
+.pal-lbl{font-size:9px;color:var(--lt);letter-spacing:0.15em;font-weight:700;margin-bottom:5px}
+.pal-dots{display:flex;gap:5px;justify-content:center}
+.pdot{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.14)}
+
+/* SVG CONNECTOR LINES */
+.connector-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+/* FLOWER CARDS - positioned absolutely */
+.fc-node{position:absolute;width:175px;z-index:5}
+.fc-node.left{right:calc(50% + 134px)}
+.fc-node.right{left:calc(50% + 134px)}
+
+/* Flower card */
+.fc{background:rgba(255,255,255,0.92);border-radius:14px;padding:10px 11px;
+  border:1px solid rgba(160,204,150,0.45);
+  box-shadow:0 3px 14px rgba(60,100,55,0.10);
+  display:flex;gap:9px;align-items:flex-start;position:relative}
+.fc-photo{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;
   border:1.5px solid rgba(140,190,130,0.4);background:#e8f4e4;
-  display:flex;align-items:center;justify-content:center;position:relative}
+  display:flex;align-items:center;justify-content:center;font-size:24px}
 .fc-photo img{width:100%;height:100%;object-fit:cover;border-radius:9px}
-.fc-photo .fallback{font-size:24px;line-height:1}
-.fc-photo .img-loading{position:absolute;inset:0;background:#e8f4e4;
-  display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:9px}
 .fc-body{flex:1;min-width:0}
-.fc-role{font-size:9px;color:var(--g1);font-weight:800;
-  letter-spacing:0.14em;margin-bottom:3px}
-.fc-name{font-size:13px;font-weight:700;color:var(--dark);
-  margin-bottom:3px;line-height:1.3;min-width:10px}
-.fc-desc{font-size:11px;color:var(--mid);line-height:1.75;min-width:10px}
+.fc-role{font-size:9px;color:var(--g1);font-weight:800;letter-spacing:0.12em;margin-bottom:2px}
+.fc-name{font-size:12px;font-weight:800;color:var(--dark);margin-bottom:2px;line-height:1.3}
+.fc-desc{font-size:10px;color:var(--mid);line-height:1.7}
+.fc-del{position:absolute;top:5px;right:6px;background:none;border:none;
+  font-size:14px;cursor:pointer;color:#ccc;line-height:1;padding:0;
+  display:none}
+.fc:hover .fc-del{display:block}
+.fc-del:hover{color:#d44}
 
-/* ── Aesthetic card ── */
-.ac{background:linear-gradient(135deg,rgba(244,236,222,0.95),rgba(228,242,224,0.6));
-  border-radius:14px;padding:12px 13px;margin-bottom:10px;
-  border:1px solid rgba(196,178,154,0.35);display:flex;gap:11px;align-items:flex-start}
-.ac-icon{font-size:22px;flex-shrink:0;margin-top:1px;width:32px;text-align:center}
-.ac-title{font-size:13px;font-weight:800;color:var(--dark);margin-bottom:3px;min-width:10px}
-.ac-desc{font-size:11px;color:#686860;line-height:1.75;min-width:10px}
+/* Aesthetic nodes - right side */
+.ac-node{position:absolute;width:175px;z-index:5}
+.ac-node{left:calc(50% + 134px)}
 
-/* ── Footer ── */
+/* Aesthetic card */
+.ac{background:rgba(255,255,255,0.92);border-radius:14px;padding:10px 12px;
+  border:1px solid rgba(196,178,154,0.38);
+  box-shadow:0 3px 14px rgba(100,80,40,0.08);position:relative}
+.ac-icon{font-size:16px;margin-bottom:4px;display:block}
+.ac-title{font-size:12px;font-weight:800;color:var(--dark);margin-bottom:3px}
+.ac-desc{font-size:10px;color:#686860;line-height:1.75}
+/* Color swatches inside color card */
+.ac-swatches{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.ac-sw{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(255,255,255,0.8);box-shadow:0 1px 4px rgba(0,0,0,0.12)}
+
+/* SECTION LABELS */
+.section-label{position:absolute;font-size:13px;font-weight:900;color:var(--dark);letter-spacing:0.08em;z-index:6}
+.section-label.left{right:calc(50% + 134px);text-align:right}
+.section-label.right{left:calc(50% + 134px)}
+
+/* ADD BUTTON */
+.add-fc-btn{display:block;width:175px;padding:7px;background:none;
+  border:1.5px dashed var(--g3);border-radius:11px;color:var(--g1);
+  font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+  text-align:center;margin-top:6px}
+
+/* FOOTER BAR */
 .ig-foot{background:linear-gradient(135deg,#eaf6e4,#f5f0e4);
-  border-top:1.5px solid #d8eed0;padding:15px 22px;
+  border-top:1.5px solid #d8eed0;padding:14px 22px;
   display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.foot-hint{font-size:11px;color:var(--lt);display:flex;align-items:center;gap:5px}
+.foot-hint{font-size:11px;color:var(--lt)}
 .foot-btns{display:flex;gap:8px}
-.dl-btn{padding:11px 22px;background:linear-gradient(135deg,var(--g2),var(--g1));
-  color:#fff;border:none;border-radius:11px;font-size:13px;font-weight:800;
-  cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:7px;
-  box-shadow:0 4px 14px rgba(60,110,55,0.28);touch-action:manipulation;letter-spacing:0.05em}
-.re-btn{padding:11px 16px;background:#fff;color:var(--mid);
-  border:1.5px solid var(--g3);border-radius:11px;font-size:13px;
-  font-weight:700;cursor:pointer;font-family:inherit;touch-action:manipulation}
-.add-btn{background:none;border:1.5px dashed var(--g3);border-radius:11px;
-  width:100%;padding:9px;color:var(--g1);font-size:13px;font-weight:700;
-  cursor:pointer;margin-top:5px;font-family:inherit;letter-spacing:0.04em}
+.dl-btn{padding:11px 22px;background:linear-gradient(135deg,var(--g2),var(--g1));color:#fff;border:none;border-radius:11px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(60,110,55,0.28);touch-action:manipulation;letter-spacing:0.05em}
+.re-btn{padding:11px 16px;background:#fff;color:var(--mid);border:1.5px solid var(--g3);border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;touch-action:manipulation}
 
 /* Editable */
-[contenteditable]{outline:none;cursor:text;border-radius:4px;
-  transition:background 0.15s,box-shadow 0.15s}
-[contenteditable]:hover{background:rgba(100,170,80,0.08)}
-[contenteditable]:focus{background:rgba(100,170,80,0.14);
-  box-shadow:0 0 0 2px rgba(80,150,70,0.38);padding:1px 4px}
+[contenteditable]{outline:none;cursor:text;border-radius:3px;transition:background 0.15s}
+[contenteditable]:hover{background:rgba(100,170,80,0.09)}
+[contenteditable]:focus{background:rgba(100,170,80,0.15);box-shadow:0 0 0 2px rgba(80,150,70,0.35);padding:1px 3px}
 
 /* Toast */
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
-  background:var(--dark);color:#fff;padding:11px 24px;border-radius:22px;
-  font-size:14px;font-weight:700;z-index:9999;
-  box-shadow:0 6px 20px rgba(0,0,0,0.22);pointer-events:none;
-  animation:fadeUp 0.3s ease;font-family:inherit;white-space:nowrap}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:10px 22px;border-radius:20px;font-size:14px;font-weight:700;z-index:9999;box-shadow:0 4px 18px rgba(0,0,0,0.22);pointer-events:none;animation:fadeUp 0.3s ease;font-family:inherit;white-space:nowrap}
 </style>
 </head>
 <body>
 
-<!-- Settings -->
 <div class="ov" id="ov">
   <div class="modal">
     <button class="mx" onclick="closeModal()">×</button>
@@ -213,25 +166,18 @@ body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-heigh
   </div>
 </div>
 
-<!-- Header -->
 <div class="hdr">
-  <button class="gear" onclick="openModal()" title="设置">⚙️</button>
-  <div style="font-size:52px;filter:drop-shadow(0 4px 12px rgba(80,140,70,0.2))">🌸</div>
+  <button class="gear" onclick="openModal()">⚙️</button>
+  <div style="font-size:50px;filter:drop-shadow(0 3px 10px rgba(80,140,70,0.2))">🌸</div>
   <h1>花艺智析</h1>
   <p>上传花艺作品 · AI 深度识别 · 生成专业解析图</p>
 </div>
 
 <div class="wrap">
-  <!-- Upload card -->
   <div class="ucard">
     <div class="dz" id="dz">
-      <div class="dz-corner tl"></div>
-      <div class="dz-corner tr"></div>
-      <div class="dz-corner bl"></div>
-      <div class="dz-corner br"></div>
-      <span class="dz-badge">✓ 图片已加载</span>
       <div class="ph" id="ph">
-        <span class="ph-icon">🌿</span>
+        <span class="ph-i">🌿</span>
         <p class="ph-t">上传你的花艺作品</p>
         <span class="ph-s">支持 JPG · PNG · WEBP · HEIC</span>
       </div>
@@ -241,29 +187,27 @@ body{background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;min-heigh
     <button class="abtn" id="abtn" onclick="analyze()">✨ 开始 AI 深度分析</button>
     <p class="errmsg" id="errmsg"></p>
   </div>
-
   <div id="rw"></div>
 </div>
 
 <script>
-const PROMPT=`你是顶级花艺设计师兼植物分类学家，拥有20年专业经验，熟知全球3000余种观赏植物。
+const PROMPT=`你是顶级花艺设计师兼植物分类学家，20年专业经验。仔细识别图中所有花材：花瓣形状数量、轮廓大小、颜色细节、叶形叶脉、茎干特征。
 
-仔细观察图片花艺作品每种花材的：花瓣形状数量排列、花朵轮廓大小、颜色细节、叶形叶脉质感、茎干特征。
+区分要点：
+• 非洲菊(大花8-12cm，单层舌瓣，粗茎) vs 雏菊(小多朵)
+• 洋牡丹/陆莲(多层紧密，草本) vs 牡丹(大花，木质茎)
+• 尤加利(蓝绿对生圆叶，银白) vs 其他圆叶
+• 康乃馨(锯齿花瓣，筒状萼) vs 石竹(更小)
+• 满天星(极小白花密集云雾) vs 石膏花
+• 绣球(大球状花序，小花聚合)
+• 洋桔梗(喇叭形薄花瓣)
 
-易混淆花材区分：
-• 非洲菊(大花8-12cm，单层舌状花瓣，粗茎)vs雏菊(小花多朵，细茎)
-• 洋牡丹/陆莲(多层紧密花瓣，草本)vs牡丹(大花，木质茎)vs芍药(大花，草本，花蕾圆)
-• 尤加利(蓝绿对生圆叶，银白质感)vs其他圆叶绿植
-• 康乃馨(锯齿花瓣，筒状花萼，多色)vs石竹(更小更细)
-• 满天星(极小白花云雾状密集)vs石膏花
-• 绣球(大型球状花序，小花聚合)vs其他团状花
-• 洋桔梗(喇叭形，薄花瓣，单双层)vs其他喇叭花
-
-严格只返回JSON，不含markdown：
-{"title":"有意境标题6-10字","subtitle":"风格流派如自然主义·侘寂美学","introduction":"专业美学评价70字含整体印象空间感情绪","flowers":[{"name":"精确花材名如白色非洲菊","searchName":"英文搜索名如gerbera daisy white","role":"焦点花|填充花|骨架材料|点缀花|叶材","description":"形态特征与视觉作用28字","emoji":"最接近emoji"}],"style":{"title":"整体风格4-6字","description":"风格特点空间感情绪38字"},"colorScheme":{"title":"色彩方案4-6字","description":"搭配逻辑视觉层次38字","colors":["5个实际hex色值"]},"vase":{"title":"容器评价4-6字","description":"材质造型与花材呼应38字"},"composition":{"title":"构成技法4-6字","description":"空间层次视觉重心线条走势38字"}}
-flowers必须含图中所有可辨花材至少5种，searchName用于图片搜索须准确。`;
+严格只返回JSON不含markdown：
+{"title":"标题6-10字","subtitle":"如自然主义·侘寂美学","introduction":"70字专业评价","flowers":[{"name":"精确花材名","searchName":"english search name for photo","role":"焦点花|填充花|骨架材料|点缀花|叶材","description":"形态特征28字","emoji":"emoji"}],"style":{"title":"4-6字","description":"38字"},"colorScheme":{"title":"4-6字","description":"38字","colors":["5个hex"]},"vase":{"title":"4-6字","description":"38字"},"composition":{"title":"4-6字","description":"38字"}}
+flowers含全部可辨花材至少5种，searchName须准确英文。`;
 
 let b64=null,mime="image/jpeg",imgUrl=null;
+let currentData=null;
 
 window.addEventListener('DOMContentLoaded',()=>{
   try{const k=localStorage.getItem('or_key');
@@ -286,32 +230,16 @@ function toast(msg){
   document.body.appendChild(t);setTimeout(()=>t.remove(),2600);
 }
 
-// Upload
-document.getElementById('fi').addEventListener('change',e=>{
-  if(e.target.files[0])loadFile(e.target.files[0]);
-});
+document.getElementById('fi').addEventListener('change',e=>{if(e.target.files[0])loadFile(e.target.files[0])});
 const dz=document.getElementById('dz');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.style.borderColor='var(--g1)'});
 dz.addEventListener('dragleave',()=>{dz.style.borderColor='var(--g3)'});
-dz.addEventListener('drop',e=>{
-  e.preventDefault();dz.style.borderColor='var(--g3)';
-  if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);
-});
+dz.addEventListener('drop',e=>{e.preventDefault();dz.style.borderColor='var(--g3)';if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0])});
 
 function loadFile(file){
   if(!file.type.startsWith('image/')){toast('请选择图片文件');return;}
   mime=file.type;imgUrl=URL.createObjectURL(file);
-  // Beautiful image display
-  const wrap=document.createElement('div');
-  wrap.className='dz-img-wrap';
-  const img=document.createElement('img');
-  img.src=imgUrl;img.alt='花艺作品';
-  wrap.appendChild(img);
-  dz.innerHTML='';
-  dz.appendChild(wrap);
-  // Re-add corners and badge
-  ['tl','tr','bl','br'].forEach(c=>{const d=document.createElement('div');d.className='dz-corner '+c;dz.appendChild(d);});
-  const badge=document.createElement('span');badge.className='dz-badge';badge.textContent='✓ 图片已加载';dz.appendChild(badge);
+  dz.innerHTML=`<img src="${imgUrl}" alt="花艺作品"/>`;
   dz.classList.add('filled');
   document.getElementById('abtn').style.display='block';
   document.getElementById('rw').innerHTML='';
@@ -319,22 +247,19 @@ function loadFile(file){
   const r=new FileReader();r.onload=e=>{b64=e.target.result.split(',')[1];};r.readAsDataURL(file);
 }
 
-// Analyze
 async function analyze(){
   const key=getKey();
   if(!key){openModal();return;}
   if(!b64){toast('请先选择图片');return;}
   const btn=document.getElementById('abtn');
-  btn.disabled=true;
-  btn.innerHTML='<span class="sp"></span>AI 深度识别花材中，请稍候...';
+  btn.disabled=true;btn.innerHTML='<span class="sp"></span>AI 深度识别花材中...';
   document.getElementById('errmsg').textContent='';
   try{
     const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},
       body:JSON.stringify({
-        model:'google/gemini-2.0-flash-001',
-        max_tokens:3000,
+        model:'google/gemini-2.0-flash-001',max_tokens:3000,
         messages:[{role:'user',content:[
           {type:'text',text:PROMPT},
           {type:'image_url',image_url:{url:`data:${mime};base64,${b64}`}}
@@ -345,16 +270,17 @@ async function analyze(){
     if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));
     const raw=data.choices?.[0]?.message?.content||'';
     const clean=raw.replace(/```json|```/g,'').trim();
-    try{renderInfo(JSON.parse(clean));}
+    let parsed;
+    try{parsed=JSON.parse(clean);}
     catch(je){
       let fx=clean;
       const ob=(fx.match(/\{/g)||[]).length,cb=(fx.match(/\}/g)||[]).length;
       const ol=(fx.match(/\[/g)||[]).length,cl=(fx.match(/\]/g)||[]).length;
-      for(let i=0;i<ol-cl;i++)fx+=']';
-      for(let i=0;i<ob-cb;i++)fx+='}';
-      try{renderInfo(JSON.parse(fx));}
-      catch(je2){throw new Error('AI返回内容解析失败，请重试');}
+      for(let i=0;i<ol-cl;i++)fx+=']';for(let i=0;i<ob-cb;i++)fx+='}';
+      parsed=JSON.parse(fx);
     }
+    currentData=parsed;
+    renderInfograhic(parsed);
   }catch(e){
     document.getElementById('errmsg').textContent='分析失败：'+e.message;
   }finally{
@@ -362,13 +288,9 @@ async function analyze(){
   }
 }
 
-// Flower photo search via Unsplash
-function getFlowerPhotoUrl(searchName,emoji){
-  // Use Unsplash source for real flower photos
-  const q=encodeURIComponent(searchName+' flower');
-  return `https://source.unsplash.com/80x80/?${q}`;
-}
-
+// ═══════════════════════════════════════
+//  RADIAL INFOGRAPHIC RENDERER
+// ═══════════════════════════════════════
 function E(tag,cls,html){
   const el=document.createElement(tag);
   if(cls)el.className=cls;
@@ -377,149 +299,300 @@ function E(tag,cls,html){
 }
 function ed(el){el.contentEditable='true';return el;}
 
-function renderInfo(r){
+function renderInfograhic(r){
   const wrap=document.getElementById('rw');
   wrap.innerHTML='';
-  const ig=E('div','infog');
 
-  // ── Title section ──
-  const top=E('div','ig-top');
-  top.append(
-    ed(E('div','ig-sub',r.subtitle||'')),
+  const infog=E('div','infog');
+  const canvas=E('div','ig-canvas');
+
+  // ── HEADER ──
+  const hdr=E('div','ig-header');
+  hdr.append(
     ed(E('div','ig-title',r.title||'')),
-    E('div','ig-desc-lbl','作 品 介 绍'),
-    ed(E('div','ig-desc',r.introduction||''))
+    ed(E('div','ig-desc',r.subtitle||''))
   );
-  ig.appendChild(top);
+  canvas.appendChild(hdr);
 
-  // ── Center photo ──
-  const photoSec=E('div','ig-photo');
-  const frame=E('div','photo-frame');
-  frame.innerHTML=`
-    <div class="photo-ring"></div>
-    <div class="photo-ring2"></div>
-    <div class="photo-circle"><img src="${imgUrl}" alt="花艺"/></div>`;
-  const palWrap=E('div','pal-wrap');
-  palWrap.appendChild(E('div','pal-lbl','色 彩 提 取'));
-  const pal=E('div','pal');
+  // ── INTRO ROW ──
+  const introRow=E('div','ig-intro-row');
+  const introInner=E('div','ig-intro-inner');
+  introInner.append(
+    E('div','ig-intro-label','作 品 介 绍'),
+    ed(E('div','ig-intro-text',r.introduction||''))
+  );
+  introRow.appendChild(introInner);
+  canvas.appendChild(introRow);
+
+  // ── RADIAL SECTION ──
+  const radial=E('div','ig-radial');
+  const inner=E('div','ig-radial-inner');
+
+  const flowers=r.flowers||[];
+  const leftFlowers=flowers.slice(0,Math.ceil(flowers.length/2));
+  const rightFlowers=flowers.slice(Math.ceil(flowers.length/2));
+
+  // Heights for positioning
+  const cardH=88; // approx card height px
+  const cardGap=12;
+  const totalH=700;
+  const centerY=totalH/2;
+
+  // Section labels
+  const lblL=E('div','section-label left','花材成分识别 🌺');
+  lblL.style.top='20px';
+  inner.appendChild(lblL);
+
+  const lblR=E('div','section-label right','🎨 设计美学解析');
+  lblR.style.top='20px';
+  inner.appendChild(lblR);
+
+  // ── CENTER ──
+  const cw=E('div','center-wrap');
+  const cor=E('div','center-ring-outer');
+  const cr=E('div','center-ring');
+  cr.innerHTML=`<img src="${imgUrl}" alt="花艺"/>`;
+  cor.appendChild(cr);
+  const cp=E('div','center-palette');
+  cp.appendChild(E('div','pal-lbl','色 彩 提 取'));
+  const pd=E('div','pal-dots');
   (r.colorScheme?.colors||[]).forEach(c=>{
-    const d=E('div','pdot');d.style.background=c;d.title=c;pal.appendChild(d);
+    const d=E('div','pdot');d.style.background=c;pd.appendChild(d);
   });
-  palWrap.appendChild(pal);
-  photoSec.append(frame,palWrap);
-  ig.appendChild(photoSec);
+  cp.appendChild(pd);
+  cw.append(cor,cp);
+  inner.appendChild(cw);
 
-  // ── Two columns ──
-  const cols=E('div','ig-cols');
+  // ── SVG LINES ──
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','connector-svg');
+  svg.setAttribute('viewBox',`0 0 800 ${totalH}`);
+  svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+  inner.appendChild(svg);
 
-  // Left: flowers
-  const left=E('div','ig-col');
-  left.appendChild(E('div','col-title','🌺 花材成分识别'));
-  (r.flowers||[]).forEach(f=>{
-    left.appendChild(makeFlowerCard(f));
+  // We'll store node references for line drawing after layout
+  const leftNodes=[];
+  const rightNodes=[];
+
+  // ── LEFT FLOWER CARDS ──
+  const leftContainer=E('div');
+  leftContainer.style.cssText=`position:absolute;right:calc(50% + 134px);top:50px;width:175px`;
+  
+  leftFlowers.forEach((f,i)=>{
+    const node=makeFlowerCard(f,true);
+    leftContainer.appendChild(node);
+    leftNodes.push({el:node,f});
   });
-  const addBtn=E('button','add-btn','＋ 添加花材');
-  addBtn.onclick=()=>left.insertBefore(makeFlowerCard(null),addBtn);
-  left.appendChild(addBtn);
+  
+  // Add flower button
+  const addBtn=E('button','add-fc-btn','＋ 添加花材');
+  addBtn.onclick=()=>{
+    const nc=makeFlowerCard(null,true);
+    leftContainer.insertBefore(nc,addBtn);
+  };
+  leftContainer.appendChild(addBtn);
+  inner.appendChild(leftContainer);
 
-  // Right: aesthetics
-  const right=E('div','ig-col');
-  right.appendChild(E('div','col-title','🎨 设计美学解析'));
-  [['🌿',r.style],['🎨',r.colorScheme],['🏺',r.vase],['✦',r.composition]].forEach(([icon,d])=>{
+  // ── RIGHT AESTHETICS ──
+  const aes=[
+    {icon:'🌿',d:r.style},
+    {icon:'🎨',d:r.colorScheme,colors:r.colorScheme?.colors},
+    {icon:'🏺',d:r.vase},
+    {icon:'✦',d:r.composition}
+  ];
+
+  const rightContainer=E('div');
+  rightContainer.style.cssText=`position:absolute;left:calc(50% + 134px);top:50px;width:175px`;
+
+  // Also put right-side flowers if any
+  rightFlowers.forEach((f,i)=>{
+    const node=makeFlowerCard(f,false);
+    rightContainer.appendChild(node);
+    rightNodes.push({el:node,f});
+  });
+
+  aes.forEach(({icon,d,colors})=>{
     if(!d)return;
     const ac=E('div','ac');
-    const ic=E('span','ac-icon',icon);
-    const body=E('div',null);
-    body.append(ed(E('div','ac-title',d.title||'')),ed(E('div','ac-desc',d.description||'')));
-    ac.append(ic,body);right.appendChild(ac);
+    ac.style.marginBottom='10px';
+    ed(Object.assign(E('span','ac-icon',icon),{}));
+    const icEl=E('span','ac-icon',icon);
+    const title=ed(E('div','ac-title',d.title||''));
+    const desc=ed(E('div','ac-desc',d.description||''));
+    ac.append(icEl,title,desc);
+    if(colors&&colors.length){
+      const sw=E('div','ac-swatches');
+      colors.forEach(c=>{const s=E('div','ac-sw');s.style.background=c;sw.appendChild(s);});
+      ac.appendChild(sw);
+    }
+    rightContainer.appendChild(ac);
   });
 
-  cols.append(left,right);
-  ig.appendChild(cols);
+  inner.appendChild(rightContainer);
 
-  // ── Footer ──
+  radial.appendChild(inner);
+  canvas.appendChild(radial);
+
+  // Draw SVG lines after a tick (layout needed)
+  setTimeout(()=>{
+    inner.style.minHeight=Math.max(
+      leftContainer.offsetHeight,
+      rightContainer.offsetHeight
+    )+120+'px';
+    drawLines(svg,inner,cw,leftContainer,rightContainer);
+  },100);
+
+  // ── FOOTER ──
   const foot=E('div','ig-foot');
-  const hint=E('div','foot-hint','✏️ 点击任意文字即可编辑');
+  const hint=E('div','foot-hint','✏️ 点击文字可编辑  |  悬停花材卡片可删除');
   const btns=E('div','foot-btns');
   const reBtn=E('button','re-btn','↺ 重新分析');
   reBtn.onclick=()=>document.getElementById('abtn').click();
-  const dlBtn=E('button','dl-btn','📥 下载高清分析图');
-  dlBtn.onclick=()=>dlImage(ig,foot);
+  const dlBtn=E('button','dl-btn','📥 下载高清图');
+  dlBtn.onclick=()=>dlImage(canvas,foot);
   btns.append(reBtn,dlBtn);
   foot.append(hint,btns);
-  ig.appendChild(foot);
 
-  wrap.appendChild(ig);
-  setTimeout(()=>ig.scrollIntoView({behavior:'smooth',block:'start'}),120);
+  infog.append(canvas,foot);
+  wrap.appendChild(infog);
+  setTimeout(()=>infog.scrollIntoView({behavior:'smooth',block:'start'}),150);
 }
 
-function makeFlowerCard(f){
+function makeFlowerCard(f,isLeft){
+  const wrap=E('div');
+  wrap.style.marginBottom='10px';
+  wrap.style.position='relative';
+
   const fc=E('div','fc');
-  // Photo box
-  const photoBox=E('div','fc-photo');
+
+  // Delete btn
+  const del=E('button','fc-del','✕');
+  del.onclick=()=>wrap.remove();
+  fc.appendChild(del);
+
+  // Photo
+  const photo=E('div','fc-photo');
   if(f&&f.searchName){
-    const loadDiv=E('div','img-loading','⏳');
-    photoBox.appendChild(loadDiv);
     const img=new Image();
     img.crossOrigin='anonymous';
+    const q=encodeURIComponent(f.searchName+' flower');
     img.onload=()=>{
-      photoBox.innerHTML='';
+      photo.innerHTML='';
       img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:9px';
-      photoBox.appendChild(img);
+      photo.appendChild(img);
     };
-    img.onerror=()=>{
-      photoBox.innerHTML=`<span class="fallback">${f.emoji||'🌸'}</span>`;
-    };
-    img.src=`https://source.unsplash.com/80x80/?${encodeURIComponent((f.searchName||f.name)+' flower')}`;
+    img.onerror=()=>{photo.innerHTML=f.emoji||'🌸';};
+    photo.innerHTML='<span style="font-size:10px;color:#aaa">...</span>';
+    img.src=`https://source.unsplash.com/80x80/?${q}`;
   } else {
-    photoBox.innerHTML=`<span class="fallback">${f?f.emoji||'🌸':'🌸'}</span>`;
+    photo.textContent=f?f.emoji||'🌸':'🌸';
   }
-  // Body
+
   const body=E('div','fc-body');
-  const role=E('div','fc-role',f?f.role||'':'点击编辑角色');
-  role.contentEditable='true';
+  const role=ed(E('div','fc-role',f?f.role||'':'角色'));
   const name=ed(E('div','fc-name',f?f.name||'':'花材名称'));
-  const desc=ed(E('div','fc-desc',f?f.description||'':'描述花材特征与视觉作用'));
+  const desc=ed(E('div','fc-desc',f?f.description||'':'点击编辑描述'));
   body.append(role,name,desc);
-  fc.append(photoBox,body);
-  return fc;
+  fc.append(photo,body);
+  wrap.appendChild(fc);
+  return wrap;
 }
 
-// Download - high quality
-async function dlImage(ig,foot){
-  foot.style.display='none';
-  // Freeze editable styles for clean render
-  const eds=ig.querySelectorAll('[contenteditable]');
-  eds.forEach(e=>{
-    e.removeAttribute('contenteditable');
-    e.style.background='none';
-    e.style.boxShadow='none';
-    e.style.padding='0';
+function drawLines(svg,container,centerEl,leftContainer,rightContainer){
+  svg.innerHTML='';
+  const cRect=container.getBoundingClientRect();
+  const cwRect=centerEl.getBoundingClientRect();
+
+  // Center of the center circle
+  const cx=cwRect.left+cwRect.width/2-cRect.left;
+  const cy=cwRect.top+cwRect.height/2-cRect.top;
+
+  const lineColor='rgba(120,170,110,0.4)';
+  const dotColor='rgba(100,150,90,0.6)';
+
+  function drawLine(x1,y1,x2,y2){
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+    line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+    line.setAttribute('stroke',lineColor);line.setAttribute('stroke-width','1.2');
+    line.setAttribute('stroke-dasharray','4,3');
+    svg.appendChild(line);
+    // dot at center end
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x2);c.setAttribute('cy',y2);c.setAttribute('r','3');
+    c.setAttribute('fill',dotColor);svg.appendChild(c);
+    // dot at card end
+    const c2=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c2.setAttribute('cx',x1);c2.setAttribute('cy',y1);c2.setAttribute('r','3');
+    c2.setAttribute('fill',dotColor);svg.appendChild(c2);
+  }
+
+  // Left cards
+  const leftCards=[...leftContainer.querySelectorAll('.fc')];
+  leftCards.forEach(card=>{
+    const r=card.getBoundingClientRect();
+    const x1=r.right-cRect.left;
+    const y1=r.top+r.height/2-cRect.top;
+    drawLine(x1,y1,cx,cy);
   });
+
+  // Right cards (aesthetics)
+  const rightCards=[...rightContainer.querySelectorAll('.ac,.fc')];
+  rightCards.forEach(card=>{
+    const r=card.getBoundingClientRect();
+    const x1=r.left-cRect.left;
+    const y1=r.top+r.height/2-cRect.top;
+    drawLine(x1,y1,cx,cy);
+  });
+}
+
+// High quality download
+async function dlImage(canvas,foot){
+  foot.style.display='none';
+  const eds=canvas.querySelectorAll('[contenteditable]');
+  eds.forEach(e=>{e.removeAttribute('contenteditable');e.style.cssText+='background:none!important;box-shadow:none!important;padding:0!important'});
+  const dels=canvas.querySelectorAll('.fc-del');
+  dels.forEach(d=>d.style.display='none');
+  const addBtns=canvas.querySelectorAll('.add-fc-btn');
+  addBtns.forEach(b=>b.style.display='none');
+
   // Wait for images
-  const imgs=ig.querySelectorAll('img');
-  await Promise.allSettled([...imgs].map(img=>
-    img.complete?Promise.resolve():new Promise(r=>{img.onload=r;img.onerror=r;})
-  ));
+  const imgs=[...canvas.querySelectorAll('img')];
+  await Promise.allSettled(imgs.map(img=>img.complete?Promise.resolve():new Promise(res=>{img.onload=res;img.onerror=res;})));
+  await new Promise(r=>setTimeout(r,300));
+
   try{
-    const canvas=await html2canvas(ig,{
-      scale:3,
-      useCORS:true,
-      allowTaint:true,
-      backgroundColor:'#faf7f0',
-      logging:false,
-      imageTimeout:8000
+    // Force redraw lines
+    const svg=canvas.querySelector('.connector-svg');
+    const inner=canvas.querySelector('.ig-radial-inner');
+    const cw=canvas.querySelector('.center-wrap');
+    const lc=canvas.querySelectorAll('.ig-radial-inner>div:not(.center-wrap):not(.connector-svg):not(.section-label)')[0];
+    const rc=canvas.querySelectorAll('.ig-radial-inner>div:not(.center-wrap):not(.connector-svg):not(.section-label)')[1];
+    if(svg&&inner&&cw)drawLines(svg,inner,cw,lc||inner,rc||inner);
+    await new Promise(r=>setTimeout(r,200));
+
+    // Use a fixed pixel-density approach for clarity
+    const w=canvas.offsetWidth;
+    const h=canvas.offsetHeight;
+    const offscreen=document.createElement('canvas');
+    offscreen.width=w*3;offscreen.height=h*3;
+
+    const {default:_}=await Promise.resolve();
+    const c=await html2canvas(canvas,{
+      scale:3,useCORS:true,allowTaint:true,
+      backgroundColor:'#faf7ee',logging:false,imageTimeout:10000,
+      width:w,height:h
     });
     const a=document.createElement('a');
-    a.download='花艺智析_'+new Date().toLocaleDateString('zh')+'.png';
-    a.href=canvas.toDataURL('image/png',1.0);
-    a.click();
+    a.download='花艺智析_'+Date.now()+'.png';
+    a.href=c.toDataURL('image/png',1.0);a.click();
     toast('📥 高清图已下载！');
-  }catch(e){
-    toast('下载失败：'+e.message);
-  }finally{
+  }catch(e){toast('下载失败：'+e.message);}
+  finally{
     foot.style.display='flex';
-    eds.forEach(e=>{e.contentEditable='true';});
+    eds.forEach(e=>e.contentEditable='true');
+    dels.forEach(d=>d.style.display='');
+    addBtns.forEach(b=>b.style.display='');
   }
 }
 </script>
