@@ -1,288 +1,433 @@
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>花艺智析</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap');
-  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  body{min-height:100vh;background:#f0ebe0;font-family:'Noto Serif SC',Georgia,serif;
-    background-image:radial-gradient(ellipse at 10% 10%,#e2eedd 0%,transparent 55%),
-    radial-gradient(ellipse at 90% 90%,#ede5d8 0%,transparent 55%)}
-  .wrap{max-width:700px;margin:0 auto;padding:36px 16px 80px}
-  .header{text-align:center;margin-bottom:28px}
-  .header .icon{font-size:48px;margin-bottom:8px}
-  .header h1{font-size:30px;font-weight:900;color:#253023;letter-spacing:0.12em;margin-bottom:6px}
-  .header p{font-size:13px;color:#8a9e84;letter-spacing:0.08em}
-  .card{background:rgba(255,255,255,0.82);border-radius:20px;padding:20px;
-    margin-bottom:20px;box-shadow:0 4px 24px rgba(90,130,80,0.1);
-    border:1px solid rgba(140,170,120,0.2)}
-  .key-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-  .key-label{font-size:14px;font-weight:800;color:#253023;letter-spacing:0.04em}
-  .key-saved{font-size:12px;color:#5a9654;font-weight:700;display:none;margin-left:auto}
-  .key-input{width:100%;padding:12px 14px;border:2px solid #c4dab8;border-radius:12px;
-    font-size:14px;font-family:inherit;background:#f4fbf0;color:#253023;
-    outline:none;margin-bottom:10px;-webkit-appearance:none}
-  .key-input:focus{border-color:#6a9e60}
-  .save-btn{width:100%;padding:13px;background:linear-gradient(135deg,#6aaa64,#3d8040);
-    color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;
-    cursor:pointer;font-family:inherit;letter-spacing:0.08em;
-    box-shadow:0 3px 14px rgba(70,120,60,0.28);-webkit-appearance:none;
-    touch-action:manipulation}
-  .key-hint{font-size:11px;color:#9aaa90;margin-top:8px;text-align:center}
-  .preview-box{background:#f4f9f0;border:2px dashed #b4caac;border-radius:14px;
-    min-height:160px;display:flex;align-items:center;justify-content:center;
-    overflow:hidden;margin-bottom:14px}
-  .preview-box img{width:100%;max-height:280px;object-fit:contain;border-radius:10px}
-  .ph{text-align:center;padding:28px 20px}
-  .ph-emoji{font-size:48px;display:block;margin-bottom:10px}
-  .ph-text{font-size:14px;color:#344832;font-weight:700;margin-bottom:4px}
-  .ph-hint{font-size:12px;color:#96a890}
-  .upload-label{display:block;width:100%;padding:14px;
-    background:linear-gradient(135deg,#7aba74,#4a8a4a);color:#fff;
-    border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;
-    letter-spacing:0.08em;font-family:inherit;text-align:center;
-    box-shadow:0 4px 18px rgba(70,120,60,0.28);margin-bottom:10px;
-    touch-action:manipulation;-webkit-appearance:none}
-  .analyze-btn{display:none;width:100%;padding:14px;
-    background:linear-gradient(135deg,#5e9458,#3d7040);color:#fff;border:none;
-    border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;
-    letter-spacing:0.08em;font-family:inherit;
-    box-shadow:0 4px 18px rgba(70,120,60,0.28);
-    touch-action:manipulation;-webkit-appearance:none}
-  .analyze-btn:disabled{opacity:0.7}
-  .err{color:#b03030;text-align:center;margin-top:10px;font-size:13px;line-height:1.5}
-  .rcard{background:rgba(255,255,255,0.9);border-radius:20px;padding:24px 18px;
-    box-shadow:0 8px 40px rgba(70,110,60,0.13);border:1px solid rgba(140,170,120,0.22);
-    animation:fadeUp 0.6s ease both}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .rtop{text-align:center;border-bottom:1.5px solid #cce0c4;padding-bottom:18px;margin-bottom:18px}
-  .rtag{font-size:11px;color:#7a9e72;letter-spacing:0.15em;font-weight:700;margin-bottom:6px}
-  .rtitle{font-size:22px;font-weight:900;color:#253023;margin-bottom:8px;letter-spacing:0.08em}
-  .rintro{font-size:13px;color:#5a6a58;line-height:1.9}
-  .section{margin-bottom:18px}
-  .stitle{font-size:13px;font-weight:800;color:#253023;margin-bottom:10px;
-    padding-bottom:7px;border-bottom:2px solid #bcd8b0;letter-spacing:0.06em}
-  .fitem{display:flex;gap:10px;align-items:flex-start;
-    background:linear-gradient(135deg,rgba(228,242,222,0.8),rgba(242,236,224,0.6));
-    border-radius:12px;padding:10px 12px;border:1px solid rgba(170,205,160,0.4);
-    margin-bottom:8px}
-  .frole{font-size:10px;color:#6a9664;font-weight:800;letter-spacing:0.1em;margin-bottom:2px}
-  .fname{font-size:13px;font-weight:700;color:#253023;margin-bottom:2px}
-  .fdesc{font-size:11.5px;color:#6a786a;line-height:1.6}
-  .aitem{display:flex;gap:10px;align-items:flex-start;
-    background:linear-gradient(135deg,rgba(242,235,224,0.8),rgba(228,240,222,0.6));
-    border-radius:12px;padding:10px 12px;border:1px solid rgba(195,180,158,0.35);
-    margin-bottom:8px}
-  .aicon{font-size:20px;flex-shrink:0;margin-top:1px}
-  .atitle{font-size:12.5px;font-weight:700;color:#253023;margin-bottom:2px}
-  .adesc{font-size:11.5px;color:#686860;line-height:1.6}
-  .colors{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-  .swatch{width:26px;height:26px;border-radius:7px;border:1.5px solid rgba(0,0,0,0.09);
-    box-shadow:0 2px 5px rgba(0,0,0,0.09);display:inline-block}
-  .center-img{text-align:center;margin:14px 0}
-  .center-img img{width:140px;height:140px;object-fit:cover;border-radius:50%;
-    border:4px solid #b8d4b0;box-shadow:0 6px 24px rgba(70,110,60,0.2)}
-  .spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);
-    border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;
-    display:inline-block;vertical-align:middle;margin-right:8px}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --green:#4a7c4e;--green-light:#7ab87a;--green-pale:#e8f4e8;
+  --cream:#f5f0e6;--dark:#253023;--mid:#6a7a68;
+}
+body{min-height:100vh;background:var(--cream);font-family:'Noto Serif SC',Georgia,serif;
+  background-image:radial-gradient(ellipse at 15% 15%,#e0edd8 0%,transparent 50%),
+  radial-gradient(ellipse at 85% 85%,#ede8d8 0%,transparent 50%)}
+
+/* SETTINGS MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;
+  display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:440px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.modal h3{font-size:17px;color:var(--dark);margin-bottom:6px;font-weight:800}
+.modal p{font-size:12px;color:#9aaa90;margin-bottom:16px;line-height:1.6}
+.modal input{width:100%;padding:12px 14px;border:2px solid #c4dab8;border-radius:12px;
+  font-size:14px;font-family:inherit;background:#f4fbf0;color:var(--dark);outline:none;margin-bottom:12px}
+.modal input:focus{border-color:var(--green)}
+.modal-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--green-light),var(--green));
+  color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:inherit;touch-action:manipulation}
+.modal-close{float:right;background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;margin-top:-4px}
+
+/* HEADER */
+.header{text-align:center;padding:36px 20px 20px;position:relative}
+.settings-btn{position:absolute;right:20px;top:36px;background:rgba(255,255,255,0.8);
+  border:1px solid #c4dab8;border-radius:50%;width:42px;height:42px;
+  font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);touch-action:manipulation}
+.header-icon{font-size:52px;margin-bottom:8px}
+.header h1{font-size:32px;font-weight:900;color:var(--dark);letter-spacing:0.12em;margin-bottom:6px}
+.header p{font-size:13px;color:#8a9e84;letter-spacing:0.06em}
+
+/* MAIN */
+.wrap{max-width:780px;margin:0 auto;padding:0 16px 80px}
+
+/* UPLOAD SECTION */
+.upload-card{background:rgba(255,255,255,0.85);border-radius:24px;padding:24px;
+  margin-bottom:24px;box-shadow:0 4px 30px rgba(80,120,70,0.1);
+  border:1px solid rgba(140,170,120,0.25)}
+.upload-zone{border:2.5px dashed #b4caac;border-radius:18px;
+  overflow:hidden;position:relative;background:#f4f9f0;
+  min-height:260px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;transition:border-color 0.3s}
+.upload-zone.has-image{min-height:320px;border-style:solid;border-color:#c4dab8}
+.upload-zone img{width:100%;height:100%;object-fit:contain;max-height:400px;display:block}
+.upload-ph{text-align:center;padding:40px 20px}
+.upload-ph .emoji{font-size:56px;display:block;margin-bottom:14px}
+.upload-ph p{font-size:15px;color:var(--dark);font-weight:700;margin-bottom:5px}
+.upload-ph span{font-size:12px;color:#96a890}
+.upload-label{display:block;width:100%;padding:15px;
+  background:linear-gradient(135deg,#7aba74,var(--green));color:#fff;
+  border-radius:13px;font-size:16px;font-weight:700;cursor:pointer;
+  text-align:center;box-shadow:0 4px 18px rgba(70,120,60,0.28);
+  margin-bottom:10px;touch-action:manipulation;letter-spacing:0.06em}
+.analyze-btn{display:none;width:100%;padding:15px;
+  background:linear-gradient(135deg,#5e9458,#3a6e3e);color:#fff;border:none;
+  border-radius:13px;font-size:16px;font-weight:700;cursor:pointer;
+  font-family:inherit;box-shadow:0 4px 18px rgba(70,120,60,0.28);
+  touch-action:manipulation;letter-spacing:0.06em;transition:all 0.2s}
+.analyze-btn:disabled{opacity:0.7}
+.err{color:#b03030;text-align:center;margin-top:10px;font-size:13px;line-height:1.5}
+
+/* INFOGRAPHIC */
+.infographic{background:#fff;border-radius:24px;overflow:hidden;
+  box-shadow:0 8px 48px rgba(70,110,60,0.15);margin-bottom:24px;
+  animation:fadeUp 0.7s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* INFO HEADER */
+.info-header{background:linear-gradient(135deg,#f0f7ec,#faf7f0);
+  padding:28px 24px 22px;text-align:center;
+  border-bottom:1.5px solid #ddeedd;position:relative}
+.info-tag{font-size:11px;color:var(--green);letter-spacing:0.2em;font-weight:700;
+  margin-bottom:8px;background:var(--green-pale);display:inline-block;
+  padding:3px 12px;border-radius:20px}
+.info-title{font-size:26px;font-weight:900;color:var(--dark);
+  letter-spacing:0.1em;margin-bottom:10px;cursor:text;
+  border-bottom:1px dashed transparent;transition:border-color 0.2s}
+.info-title:hover{border-bottom-color:#c4dab8}
+.info-intro{font-size:13px;color:var(--mid);line-height:1.9;
+  max-width:520px;margin:0 auto;cursor:text}
+
+/* INFO BODY */
+.info-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.info-col{padding:20px}
+.info-col-left{border-right:1px solid #eef4ee}
+.col-title{font-size:13px;font-weight:800;color:var(--dark);
+  margin-bottom:14px;padding-bottom:8px;
+  border-bottom:2px solid #c4dab8;letter-spacing:0.06em}
+
+/* CENTER IMAGE */
+.info-center{border-top:1.5px solid #eef4ee;border-bottom:1.5px solid #eef4ee;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px;background:linear-gradient(180deg,#fafdf8,#f5f8f2)}
+.center-circle{width:180px;height:180px;border-radius:50%;overflow:hidden;
+  border:5px solid #c8dfc4;box-shadow:0 8px 32px rgba(70,110,60,0.2);margin-bottom:14px}
+.center-circle img{width:100%;height:100%;object-fit:cover}
+.color-palette{display:flex;gap:6px;justify-content:center;margin-top:4px}
+.color-dot{width:24px;height:24px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.8);box-shadow:0 2px 6px rgba(0,0,0,0.12)}
+.palette-label{font-size:10px;color:#8aaa80;text-align:center;
+  margin-bottom:6px;letter-spacing:0.1em}
+
+/* FLOWER ITEMS */
+.flower-item{display:flex;gap:10px;align-items:flex-start;
+  background:linear-gradient(135deg,rgba(232,244,228,0.8),rgba(244,240,230,0.5));
+  border-radius:12px;padding:10px 12px;margin-bottom:8px;
+  border:1px solid rgba(170,205,160,0.4);cursor:text}
+.flower-emoji{font-size:26px;line-height:1;flex-shrink:0}
+.flower-role{font-size:10px;color:var(--green);font-weight:800;
+  letter-spacing:0.1em;margin-bottom:2px}
+.flower-name{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;
+  outline:none;min-width:20px}
+.flower-desc{font-size:11.5px;color:var(--mid);line-height:1.65;
+  outline:none;min-width:20px}
+
+/* AESTHETIC ITEMS */
+.aesthetic-item{display:flex;gap:10px;align-items:flex-start;
+  background:linear-gradient(135deg,rgba(244,238,226,0.8),rgba(230,242,226,0.5));
+  border-radius:12px;padding:10px 12px;margin-bottom:8px;
+  border:1px solid rgba(198,182,158,0.35);cursor:text}
+.aesthetic-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.aesthetic-title{font-size:12.5px;font-weight:700;color:var(--dark);
+  margin-bottom:2px;outline:none;min-width:20px}
+.aesthetic-desc{font-size:11.5px;color:#686860;line-height:1.65;
+  outline:none;min-width:20px}
+
+/* FULL WIDTH SECTION */
+.info-full{padding:16px 20px;background:#fafdf8;border-top:1px solid #eef4ee}
+
+/* DOWNLOAD */
+.download-bar{padding:16px 20px;background:linear-gradient(135deg,#f0f7ec,#faf7f0);
+  border-top:1.5px solid #ddeedd;display:flex;gap:10px;align-items:center;justify-content:center}
+.download-btn{padding:12px 28px;background:linear-gradient(135deg,var(--green-light),var(--green));
+  color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(70,120,60,0.28);
+  display:flex;align-items:center;gap:8px;touch-action:manipulation}
+.download-hint{font-size:11px;color:#9aaa90}
+
+.spinner{width:17px;height:17px;border:2.5px solid rgba(255,255,255,0.3);
+  border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;
+  display:inline-block;vertical-align:middle;margin-right:8px}
+
+[contenteditable]:focus{outline:2px solid #a8d0a0;border-radius:4px;padding:1px 3px}
 </style>
 </head>
 <body>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>🔑 API Key 设置</h3>
+    <p>输入你的 OpenRouter API Key（sk-or-v1-...开头）<br/>Key 仅保存在本机浏览器，不会上传服务器</p>
+    <input type="password" id="keyInput" placeholder="sk-or-v1-..."/>
+    <button class="modal-btn" onclick="saveKey()">保存 Key</button>
+  </div>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <button class="settings-btn" onclick="openModal()" title="API Key 设置">⚙️</button>
+  <div class="header-icon">🌸</div>
+  <h1>花艺智析</h1>
+  <p>上传花艺作品 · AI 生成专业解析报告</p>
+</div>
+
 <div class="wrap">
-  <div class="header">
-    <div class="icon">🌸</div>
-    <h1>花艺智析</h1>
-    <p>上传花艺作品 · AI 生成专业解析报告</p>
-  </div>
-
-  <!-- API Key -->
-  <div class="card" id="keyCard">
-    <div class="key-row">
-      <span style="font-size:18px">🔑</span>
-      <span class="key-label">OpenRouter API Key</span>
-      <span class="key-saved" id="keyStatus">✅ 已保存</span>
-    </div>
-    <input type="password" class="key-input" id="keyInput" placeholder="粘贴你的 sk-or-v1-... Key"/>
-    <button class="save-btn" id="saveBtn" onclick="saveKey()">保存 Key</button>
-    <p class="key-hint">Key 仅存在你的手机本地，不会上传任何服务器</p>
-  </div>
-
-  <!-- 上传 -->
-  <div class="card">
-    <div class="preview-box" id="previewBox">
-      <div class="ph">
-        <span class="ph-emoji">🌿</span>
-        <p class="ph-text">图片将显示在这里</p>
-        <p class="ph-hint">点击下方按钮选择图片</p>
+  <!-- Upload -->
+  <div class="upload-card">
+    <div class="upload-zone" id="uploadZone">
+      <div class="upload-ph" id="uploadPh">
+        <span class="emoji">🌿</span>
+        <p>上传你的花艺作品</p>
+        <span>支持 JPG · PNG · WEBP</span>
       </div>
     </div>
     <label class="upload-label" for="fileInput">📷 选择花艺图片</label>
     <input type="file" id="fileInput" accept="image/*" style="display:none"/>
-    <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">✨ 开始智能分析</button>
+    <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">✨ 开始 AI 智能分析</button>
     <p class="err" id="errMsg"></p>
   </div>
 
-  <div id="result"></div>
+  <!-- Infographic Result -->
+  <div id="resultWrap"></div>
 </div>
 
 <script>
-const SYSTEM_PROMPT = `你是专业花艺设计师和花卉识别专家。分析花艺作品，严格只返回JSON不含任何markdown标记：
-{"title":"风格标题5-10字","subtitle":"副标题","introduction":"整体介绍50字","flowers":[{"name":"花材名","role":"角色","description":"描述20字","emoji":"emoji"}],"style":{"title":"风格名","description":"描述30字"},"colorScheme":{"title":"色彩方案","description":"描述30字","colors":["#hex1","#hex2","#hex3","#hex4","#hex5"]},"vase":{"title":"容器搭配","description":"描述30字"},"composition":{"title":"构成技法","description":"描述30字"}}
-识别3-7种花材，颜色从图片真实提取。`;
+const SYSTEM_PROMPT = `你是顶级花艺设计师兼植物学家，拥有20年专业花卉识别经验。请仔细分析图片中花艺作品的每一种花材，包括花朵形态、叶片形状、茎干特征、颜色等细节。
 
-let imageBase64 = null;
-let imageMime = "image/jpeg";
-let imageUrl = null;
-
-// 页面加载时读取已保存的 Key
-window.addEventListener('DOMContentLoaded', () => {
-  try {
-    const saved = localStorage.getItem('openrouter_key');
-    if (saved) {
-      document.getElementById('keyInput').value = saved;
-      document.getElementById('keyStatus').style.display = 'inline';
-      document.getElementById('saveBtn').textContent = '更新 Key';
+严格只返回JSON，不含任何markdown标记或额外文字：
+{
+  "title": "作品风格标题（6-10字，有意境）",
+  "subtitle": "风格流派·设计美学（如：自然主义·侘寂风格）",
+  "introduction": "专业介绍（60字，包含整体美学评价）",
+  "flowers": [
+    {
+      "name": "花材中文名（要精确，如：白色非洲菊、尤加利叶、绿色康乃馨）",
+      "role": "在作品中的角色（焦点花/填充花/骨架材料/点缀花/叶材）",
+      "description": "形态特征与在作品中的作用（25字）",
+      "emoji": "最接近的emoji"
     }
-  } catch(e) {}
+  ],
+  "style": {
+    "title": "整体风格名称",
+    "description": "风格特点与空间感描述（35字）"
+  },
+  "colorScheme": {
+    "title": "色彩方案名称",
+    "description": "色彩搭配逻辑与视觉效果（35字）",
+    "colors": ["从图片提取的5个主要hex颜色"]
+  },
+  "vase": {
+    "title": "容器搭配评价",
+    "description": "容器材质、造型与花材的呼应关系（35字）"
+  },
+  "composition": {
+    "title": "构成技法",
+    "description": "具体的空间构成手法与视觉重心（35字）"
+  }
+}
+
+注意：flowers数组必须包含图中所有可见花材，至少4种，最多8种。颜色必须从图片实际提取。`;
+
+let imageBase64=null, imageMime="image/jpeg", imageUrl=null;
+
+// Key management
+window.addEventListener('DOMContentLoaded',()=>{
+  try{
+    const k=localStorage.getItem('or_key');
+    if(k) document.getElementById('keyInput').value=k;
+    else setTimeout(openModal, 800);
+  }catch(e){}
+});
+function openModal(){document.getElementById('modalOverlay').classList.add('open')}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open')}
+function saveKey(){
+  const v=document.getElementById('keyInput').value.trim();
+  if(!v){alert('请输入 API Key');return;}
+  try{localStorage.setItem('or_key',v);}catch(e){}
+  closeModal();
+  showToast('✅ API Key 已保存');
+}
+function getKey(){
+  try{return localStorage.getItem('or_key')||'';}catch(e){return '';}
+}
+function showToast(msg){
+  const t=document.createElement('div');
+  t.textContent=msg;
+  Object.assign(t.style,{position:'fixed',bottom:'30px',left:'50%',transform:'translateX(-50%)',
+    background:'#3a6e3e',color:'#fff',padding:'10px 22px',borderRadius:'20px',
+    fontSize:'14px',fontWeight:'700',zIndex:'9999',fontFamily:'inherit',
+    boxShadow:'0 4px 16px rgba(0,0,0,0.2)'});
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2500);
+}
+document.getElementById('modalOverlay').addEventListener('click',function(e){
+  if(e.target===this) closeModal();
 });
 
-function saveKey() {
-  const val = document.getElementById('keyInput').value.trim();
-  if (!val) {
-    alert('请先粘贴你的 API Key！');
-    return;
-  }
-  try {
-    localStorage.setItem('openrouter_key', val);
-    document.getElementById('keyStatus').style.display = 'inline';
-    document.getElementById('saveBtn').textContent = '✅ 已保存！';
-    setTimeout(() => {
-      document.getElementById('saveBtn').textContent = '更新 Key';
-    }, 2000);
-  } catch(e) {
-    alert('保存失败：' + e.message);
-  }
-}
-
-function getKey() {
-  try {
-    return localStorage.getItem('openrouter_key') || document.getElementById('keyInput').value.trim();
-  } catch(e) {
-    return document.getElementById('keyInput').value.trim();
-  }
-}
-
-document.getElementById('fileInput').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  loadFile(file);
+// File handling
+document.getElementById('fileInput').addEventListener('change',function(e){
+  if(e.target.files[0]) loadFile(e.target.files[0]);
 });
-
-function loadFile(file) {
-  if (!file.type.startsWith('image/')) {
-    alert('请选择图片文件！');
-    return;
-  }
-  imageMime = file.type;
-  imageUrl = URL.createObjectURL(file);
-  document.getElementById('previewBox').innerHTML = `<img src="${imageUrl}" alt="预览"/>`;
-  document.getElementById('analyzeBtn').style.display = 'block';
-  document.getElementById('result').innerHTML = '';
-  document.getElementById('errMsg').textContent = '';
-  const reader = new FileReader();
-  reader.onload = e => { imageBase64 = e.target.result.split(',')[1]; };
-  reader.readAsDataURL(file);
+function loadFile(file){
+  if(!file.type.startsWith('image/')){alert('请选择图片文件');return;}
+  imageMime=file.type; imageUrl=URL.createObjectURL(file);
+  const zone=document.getElementById('uploadZone');
+  zone.innerHTML=`<img src="${imageUrl}" alt="预览"/>`;
+  zone.classList.add('has-image');
+  document.getElementById('analyzeBtn').style.display='block';
+  document.getElementById('resultWrap').innerHTML='';
+  document.getElementById('errMsg').textContent='';
+  const r=new FileReader();
+  r.onload=e=>{imageBase64=e.target.result.split(',')[1];};
+  r.readAsDataURL(file);
 }
 
-async function analyze() {
-  const key = getKey();
-  if (!key) {
-    alert('请先保存你的 API Key！');
-    return;
-  }
-  if (!imageBase64) {
-    alert('请先选择一张图片！');
-    return;
-  }
-  const btn = document.getElementById('analyzeBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>AI 识别中，请稍候...';
-  document.getElementById('errMsg').textContent = '';
-
-  try {
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-001',
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'text', text: SYSTEM_PROMPT + '\n请分析这束花艺作品。' },
-            { type: 'image_url', image_url: { url: `data:${imageMime};base64,${imageBase64}` } }
-          ]
-        }]
+// Analyze
+async function analyze(){
+  const key=getKey();
+  if(!key){openModal();return;}
+  if(!imageBase64){alert('请先选择图片');return;}
+  const btn=document.getElementById('analyzeBtn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span>AI 深度识别花材中...';
+  document.getElementById('errMsg').textContent='';
+  try{
+    const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},
+      body:JSON.stringify({
+        model:'google/gemini-2.0-flash-001',
+        messages:[{role:'user',content:[
+          {type:'text',text:SYSTEM_PROMPT},
+          {type:'image_url',image_url:{url:`data:${imageMime};base64,${imageBase64}`}}
+        ]}]
       })
     });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
-    const text = data.choices?.[0]?.message?.content || '';
-    const clean = text.replace(/```json|```/g,'').trim();
-    const r = JSON.parse(clean);
-    renderResult(r);
-  } catch(e) {
-    document.getElementById('errMsg').textContent = '分析失败：' + e.message;
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '✨ 重新分析';
+    const data=await res.json();
+    if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
+    const text=data.choices?.[0]?.message?.content||'';
+    const clean=text.replace(/```json|```/g,'').trim();
+    const r=JSON.parse(clean);
+    renderInfograhic(r);
+  }catch(e){
+    document.getElementById('errMsg').textContent='分析失败：'+e.message;
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML='✨ 重新分析';
   }
 }
 
-function renderResult(r) {
-  const colors = (r.colorScheme?.colors||[]).map(c=>
-    `<span class="swatch" style="background:${c}" title="${c}"></span>`).join('');
-  const flowers = (r.flowers||[]).map(f=>`
-    <div class="fitem">
-      <span style="font-size:26px;line-height:1;flex-shrink:0">${f.emoji}</span>
-      <div>
-        <div class="frole">${f.role}</div>
-        <div class="fname">${f.name}</div>
-        <div class="fdesc">${f.description}</div>
-      </div>
-    </div>`).join('');
-  const aesthetics = [
+function ce(tag,cls,html,attrs){
+  const el=document.createElement(tag);
+  if(cls) el.className=cls;
+  if(html) el.innerHTML=html;
+  if(attrs) Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+  return el;
+}
+function editable(el){el.contentEditable='true';return el;}
+
+function renderInfograhic(r){
+  const wrap=document.getElementById('resultWrap');
+  wrap.innerHTML='';
+  const info=ce('div','infographic');
+
+  // Header
+  const hdr=ce('div','info-header');
+  const tag=ce('div','info-tag',r.subtitle||'');
+  const title=editable(ce('div','info-title',r.title||''));
+  const intro=editable(ce('div','info-intro',r.introduction||''));
+  hdr.append(tag,title,intro);
+  info.appendChild(hdr);
+
+  // Center image strip
+  const centerStrip=ce('div','info-center');
+  const circle=ce('div','center-circle');
+  circle.innerHTML=`<img src="${imageUrl}" alt="花艺"/>`;
+  const plabel=ce('div','palette-label','色彩提取');
+  const palette=ce('div','color-palette');
+  (r.colorScheme?.colors||[]).forEach(c=>{
+    const dot=ce('div','color-dot');
+    dot.style.background=c; dot.title=c;
+    palette.appendChild(dot);
+  });
+  centerStrip.append(circle,plabel,palette);
+  info.appendChild(centerStrip);
+
+  // Two columns
+  const body=ce('div','info-body');
+
+  // Left: flowers
+  const left=ce('div','info-col info-col-left');
+  left.appendChild(ce('div','col-title','🌺 花材成分识别'));
+  (r.flowers||[]).forEach(f=>{
+    const item=ce('div','flower-item');
+    const emoji=ce('span','flower-emoji',f.emoji||'🌸');
+    const info2=ce('div');
+    const role=ce('div','flower-role',f.role||'');
+    const name=editable(ce('div','flower-name',f.name||''));
+    const desc=editable(ce('div','flower-desc',f.description||''));
+    info2.append(role,name,desc);
+    item.append(emoji,info2);
+    left.appendChild(item);
+  });
+
+  // Right: aesthetics
+  const right=ce('div','info-col');
+  right.appendChild(ce('div','col-title','🎨 设计美学解析'));
+  [
     ['🌿',r.style],['🎨',r.colorScheme],['🏺',r.vase],['✦',r.composition]
-  ].map(([icon,d])=>`
-    <div class="aitem">
-      <span class="aicon">${icon}</span>
-      <div>
-        <div class="atitle">${d?.title||''}</div>
-        <div class="adesc">${d?.description||''}</div>
-      </div>
-    </div>`).join('');
-  document.getElementById('result').innerHTML = `
-    <div class="rcard">
-      <div class="rtop">
-        <div class="rtag">${r.subtitle||''}</div>
-        <div class="rtitle">${r.title||''}</div>
-        <div class="rintro">${r.introduction||''}</div>
-      </div>
-      <div class="center-img"><img src="${imageUrl}" alt="花艺"/></div>
-      <div class="section">
-        <div class="stitle">🌺 花材成分识别</div>${flowers}
-      </div>
-      <div class="section">
-        <div class="stitle">🎨 设计美学解析</div>${aesthetics}
-        <div class="colors">${colors}</div>
-      </div>
-    </div>`;
-  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+  ].forEach(([icon,d])=>{
+    if(!d) return;
+    const item=ce('div','aesthetic-item');
+    const ic=ce('span','aesthetic-icon',icon);
+    const info3=ce('div');
+    const t=editable(ce('div','aesthetic-title',d.title||''));
+    const de=editable(ce('div','aesthetic-desc',d.description||''));
+    info3.append(t,de);
+    item.append(ic,info3);
+    right.appendChild(item);
+  });
+
+  body.append(left,right);
+  info.appendChild(body);
+
+  // Download bar
+  const bar=ce('div','download-bar');
+  const hint=ce('div','download-hint','所有文字均可点击编辑');
+  const dlBtn=ce('button','download-btn','📥 下载分析图');
+  dlBtn.onclick=()=>downloadImage(info);
+  bar.append(hint,dlBtn);
+  info.appendChild(bar);
+
+  wrap.appendChild(info);
+  info.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+async function downloadImage(el){
+  const bar=el.querySelector('.download-bar');
+  bar.style.display='none';
+  // temporarily disable contenteditable outlines
+  const editables=el.querySelectorAll('[contenteditable]');
+  editables.forEach(e=>e.removeAttribute('contenteditable'));
+  try{
+    const canvas=await html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#ffffff'});
+    const link=document.createElement('a');
+    link.download='花艺智析报告.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  }catch(e){alert('下载失败：'+e.message);}
+  finally{
+    bar.style.display='flex';
+    editables.forEach(e=>e.contentEditable='true');
+  }
 }
 </script>
 </body>
